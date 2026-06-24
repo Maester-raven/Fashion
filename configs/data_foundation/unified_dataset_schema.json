@@ -1,0 +1,983 @@
+{
+  "schema_version": "2026-06-16.unified_fashion_dataset.v1.1",
+  "description": "Final unified annotation schema for FashionAI + DeepFashion2 multi-instance, multi-attribute, multi-region fashion data.",
+  "category_taxonomy": {
+    "categories": [
+      "top",
+      "pants",
+      "skirt",
+      "outerwear",
+      "dress",
+      "shoes",
+      "bag",
+      "accessory"
+    ],
+    "display_names": {
+      "top": {
+        "zh": "上衣",
+        "en": "top"
+      },
+      "pants": {
+        "zh": "裤子",
+        "en": "pants"
+      },
+      "skirt": {
+        "zh": "裙子",
+        "en": "skirt"
+      },
+      "outerwear": {
+        "zh": "外套",
+        "en": "outerwear"
+      },
+      "dress": {
+        "zh": "连衣裙",
+        "en": "dress"
+      },
+      "shoes": {
+        "zh": "鞋子",
+        "en": "shoes"
+      },
+      "bag": {
+        "zh": "包包",
+        "en": "bag"
+      },
+      "accessory": {
+        "zh": "配饰",
+        "en": "accessory"
+      }
+    }
+  },
+  "target_part_taxonomy": {
+    "whole_garment": {
+      "zh": "整件服饰",
+      "scope": "global",
+      "default_region_strategy": "use_instance_region",
+      "aliases_zh": [
+        "整件衣服",
+        "整件服饰",
+        "这件衣服",
+        "服装整体"
+      ],
+      "query_templates_zh": [
+        "这件衣服",
+        "整件服饰",
+        "这件{category_zh}"
+      ],
+      "region_generation": {
+        "primary": "use_instance_mask",
+        "fallback": "use_instance_bbox",
+        "confidence": 1.0
+      },
+      "valid_categories": [
+        "top",
+        "pants",
+        "skirt",
+        "outerwear",
+        "dress",
+        "shoes",
+        "bag",
+        "accessory"
+      ]
+    },
+    "collar": {
+      "zh": "衣领",
+      "scope": "local",
+      "default_region_strategy": "upper_instance_rule_or_sam",
+      "aliases_zh": [
+        "衣领",
+        "领子",
+        "领部"
+      ],
+      "query_templates_zh": [
+        "这件衣服的衣领",
+        "这件{category_zh}的领子",
+        "衣领设计"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.2,
+          0.0,
+          0.8,
+          0.35
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.65
+      },
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "lapel": {
+      "zh": "翻领/驳头",
+      "scope": "local",
+      "default_region_strategy": "upper_instance_rule_or_sam",
+      "aliases_zh": [
+        "翻领",
+        "驳头",
+        "西装领"
+      ],
+      "query_templates_zh": [
+        "这件衣服的翻领",
+        "这件外套的驳头",
+        "翻领设计"
+      ],
+      "region_generation": {
+        "primary": "upper_wide_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.12,
+          0.03,
+          0.88,
+          0.5
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.62
+      },
+      "valid_categories": [
+        "outerwear"
+      ]
+    },
+    "neck": {
+      "zh": "颈部",
+      "scope": "local",
+      "default_region_strategy": "upper_instance_rule_or_sam",
+      "aliases_zh": [
+        "颈部",
+        "领部",
+        "脖颈区域"
+      ],
+      "query_templates_zh": [
+        "这件衣服的颈部设计",
+        "颈部领型",
+        "领部设计"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.25,
+          0.0,
+          0.75,
+          0.32
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.62
+      },
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "neckline": {
+      "zh": "领口",
+      "scope": "local",
+      "default_region_strategy": "upper_instance_rule_or_sam",
+      "aliases_zh": [
+        "领口",
+        "领口线",
+        "领口形状"
+      ],
+      "query_templates_zh": [
+        "这件衣服的领口",
+        "领口的设计",
+        "这件{category_zh}的领口形状"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.18,
+          0.0,
+          0.82,
+          0.38
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.66
+      },
+      "valid_categories": [
+        "top",
+        "dress"
+      ]
+    },
+    "sleeve": {
+      "zh": "袖子",
+      "scope": "local",
+      "default_region_strategy": "side_instance_rule_or_sam",
+      "aliases_zh": [
+        "袖子",
+        "衣袖",
+        "袖身"
+      ],
+      "query_templates_zh": [
+        "这件衣服的袖子",
+        "袖长",
+        "衣袖区域"
+      ],
+      "region_generation": {
+        "primary": "upper_side_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.0,
+          0.05,
+          1.0,
+          0.72
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.6
+      },
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "cuff": {
+      "zh": "袖口",
+      "scope": "local",
+      "default_region_strategy": "sleeve_endpoint_rule_or_sam",
+      "aliases_zh": [
+        "袖口",
+        "袖边",
+        "袖端"
+      ],
+      "query_templates_zh": [
+        "这件衣服的袖口",
+        "袖口设计",
+        "衣袖末端"
+      ],
+      "region_generation": {
+        "primary": "sleeve_endpoint_rule",
+        "bbox_ratio_xyxy": [
+          0.0,
+          0.5,
+          1.0,
+          0.78
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.45
+      },
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "hem": {
+      "zh": "下摆",
+      "scope": "local",
+      "default_region_strategy": "lower_instance_rule_or_sam",
+      "aliases_zh": [
+        "下摆",
+        "衣摆",
+        "底摆",
+        "裙摆"
+      ],
+      "query_templates_zh": [
+        "这件衣服的下摆",
+        "衣服下摆",
+        "裙摆区域"
+      ],
+      "region_generation": {
+        "primary": "lower_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.05,
+          0.7,
+          0.95,
+          1.0
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.56
+      },
+      "valid_categories": [
+        "top",
+        "skirt",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "waist": {
+      "zh": "腰部",
+      "scope": "local",
+      "default_region_strategy": "middle_instance_rule_or_sam",
+      "aliases_zh": [
+        "腰部",
+        "腰线",
+        "收腰位置"
+      ],
+      "query_templates_zh": [
+        "这件衣服的腰部",
+        "腰线位置",
+        "收腰设计"
+      ],
+      "region_generation": {
+        "primary": "middle_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.08,
+          0.38,
+          0.92,
+          0.62
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.52
+      },
+      "valid_categories": [
+        "pants",
+        "skirt",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "shoulder": {
+      "zh": "肩部",
+      "scope": "local",
+      "default_region_strategy": "upper_side_instance_rule_or_sam",
+      "aliases_zh": [
+        "肩部",
+        "肩线",
+        "肩膀区域"
+      ],
+      "query_templates_zh": [
+        "这件衣服的肩部",
+        "肩部设计",
+        "肩线区域"
+      ],
+      "region_generation": {
+        "primary": "upper_side_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.0,
+          0.0,
+          1.0,
+          0.28
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.5
+      },
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "pocket": {
+      "zh": "口袋",
+      "scope": "local",
+      "default_region_strategy": "language_grounding_or_sam",
+      "aliases_zh": [
+        "口袋",
+        "衣袋",
+        "袋口"
+      ],
+      "query_templates_zh": [
+        "这件衣服的口袋",
+        "口袋设计",
+        "衣袋区域"
+      ],
+      "region_generation": {
+        "primary": "language_grounding_sam",
+        "fallback": "middle_lower_candidate_crop",
+        "bbox_ratio_xyxy": [
+          0.1,
+          0.3,
+          0.9,
+          0.78
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.35
+      },
+      "valid_categories": [
+        "top",
+        "pants",
+        "skirt",
+        "outerwear",
+        "dress"
+      ]
+    },
+    "pattern": {
+      "zh": "图案",
+      "scope": "local",
+      "default_region_strategy": "language_grounding_or_sam",
+      "aliases_zh": [
+        "图案",
+        "印花",
+        "纹样",
+        "花纹"
+      ],
+      "query_templates_zh": [
+        "这件衣服上的图案",
+        "服饰图案",
+        "印花区域"
+      ],
+      "region_generation": {
+        "primary": "language_grounding_sam",
+        "fallback": "instance_mask_as_weak_region",
+        "clip_to_instance_mask": true,
+        "confidence": 0.3
+      },
+      "valid_categories": [
+        "top",
+        "pants",
+        "skirt",
+        "outerwear",
+        "dress",
+        "shoes",
+        "bag",
+        "accessory"
+      ]
+    },
+    "decoration": {
+      "zh": "装饰",
+      "scope": "local",
+      "default_region_strategy": "language_grounding_or_sam",
+      "aliases_zh": [
+        "装饰",
+        "配饰装饰",
+        "装饰物",
+        "工艺装饰"
+      ],
+      "query_templates_zh": [
+        "这件衣服的装饰",
+        "装饰区域",
+        "服饰上的装饰细节"
+      ],
+      "region_generation": {
+        "primary": "language_grounding_sam",
+        "fallback": "instance_mask_as_weak_region",
+        "clip_to_instance_mask": true,
+        "confidence": 0.3
+      },
+      "valid_categories": [
+        "top",
+        "pants",
+        "skirt",
+        "outerwear",
+        "dress",
+        "shoes",
+        "bag",
+        "accessory"
+      ]
+    }
+  },
+  "source_types": {
+    "dataset": [
+      "FashionAI",
+      "DeepFashion2"
+    ],
+    "instance_source": [
+      "DeepFashion2_GT",
+      "MaskRCNN_product_pipeline",
+      "Mask2Former_legacy",
+      "manual"
+    ],
+    "attribute_source": [
+      "FashionAI_original",
+      "DINOv2_pseudo",
+      "manual"
+    ],
+    "region_source": [
+      "instance_region",
+      "geometry_rule",
+      "deepfashion2_landmark_rule",
+      "human_parsing_rule",
+      "SAM_refined",
+      "language_grounding_sam",
+      "manual",
+      "missing"
+    ],
+    "segmentation_format": [
+      "coco_polygon",
+      "coco_rle",
+      "binary_mask_path",
+      "none"
+    ]
+  },
+  "fashionai_attribute_map": {
+    "skirt_length_labels": {
+      "attribute_id": "attr_skirt_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "skirt"
+      ],
+      "region_required": true
+    },
+    "coat_length_labels": {
+      "attribute_id": "attr_coat_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "outerwear"
+      ],
+      "region_required": true
+    },
+    "collar_design_labels": {
+      "attribute_id": "attr_collar_design",
+      "target_part": "collar",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_required": true
+    },
+    "lapel_design_labels": {
+      "attribute_id": "attr_lapel_design",
+      "target_part": "lapel",
+      "scope": "local",
+      "valid_categories": [
+        "outerwear"
+      ],
+      "region_required": true
+    },
+    "neck_design_labels": {
+      "attribute_id": "attr_neck_design",
+      "target_part": "neck",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_required": true
+    },
+    "neckline_design_labels": {
+      "attribute_id": "attr_neckline_design",
+      "target_part": "neckline",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "dress"
+      ],
+      "region_required": true
+    },
+    "pant_length_labels": {
+      "attribute_id": "attr_pant_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "pants"
+      ],
+      "region_required": true
+    },
+    "sleeve_length_labels": {
+      "attribute_id": "attr_sleeve_length",
+      "target_part": "sleeve",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_required": true
+    }
+  },
+  "record_schema": {
+    "required_top_level_fields": [
+      "schema_version",
+      "dataset",
+      "image_id",
+      "image_path",
+      "width",
+      "height",
+      "instances"
+    ],
+    "instance_fields": {
+      "instance_id": "string, unique inside image",
+      "category": "one of category_taxonomy.categories",
+      "category_id": "integer, optional stable id",
+      "bbox": "[x1, y1, x2, y2] in image coordinates",
+      "segmentation": "COCO polygon/RLE, binary mask path, or null",
+      "segmentation_format": "one of source_types.segmentation_format",
+      "area": "mask area in pixels",
+      "instance_source": "one of source_types.instance_source",
+      "confidence": "float in [0, 1]",
+      "attributes": "list of attribute records"
+    },
+    "attribute_fields": {
+      "attribute_id": "stable attribute id",
+      "attribute_name": "original FashionAI attribute name when available",
+      "attribute_value": "original or predicted attribute value",
+      "target_part": "one of target_part_taxonomy keys",
+      "scope": "global or local",
+      "attribute_source": "one of source_types.attribute_source",
+      "confidence": "1.0 for FashionAI_original, model probability for pseudo labels",
+      "region": "region record"
+    },
+    "region_fields": {
+      "region_id": "string, optional",
+      "target_part": "one of target_part_taxonomy keys",
+      "bbox": "[x1, y1, x2, y2] in image coordinates, null if missing",
+      "segmentation": "COCO polygon/RLE, binary mask path, or null",
+      "segmentation_format": "one of source_types.segmentation_format",
+      "area": "region mask area in pixels, optional",
+      "region_source": "one of source_types.region_source",
+      "confidence": "float in [0, 1]",
+      "is_derived_from_instance": "boolean"
+    }
+  },
+  "quality_rules": {
+    "fashionai_original_attribute_confidence": 1.0,
+    "dinov2_pseudo_attribute_min_confidence": 0.65,
+    "instance_min_area_ratio": 0.002,
+    "local_region_min_area_ratio": 0.0005,
+    "local_region_max_instance_area_ratio": 0.6,
+    "region_must_intersect_instance": true,
+    "region_prefer_inside_instance": true,
+    "invalid_attribute_value": "Invisible",
+    "ignore_invisible_attribute_for_positive_training": true
+  },
+  "language_query_schema": {
+    "description": "Training item format for language-guided local region grounding.",
+    "fields": {
+      "query_id": "string",
+      "image_id": "string",
+      "instance_id": "string",
+      "query": "natural language part or attribute query",
+      "target_part": "one of target_part_taxonomy keys",
+      "bbox": "[x1, y1, x2, y2]",
+      "segmentation": "target region mask",
+      "segmentation_format": "COCO polygon/RLE, binary mask path, or none",
+      "source_attribute_id": "optional linked attribute id",
+      "region_source": "one of source_types.region_source",
+      "confidence": "float in [0, 1]"
+    }
+  },
+  "region_generation_policy": {
+    "stage_order": [
+      "use_instance_mask_for_global_attributes",
+      "derive_geometric_part_region_for_supported_local_parts",
+      "clip_part_region_to_instance_mask_when_mask_exists",
+      "fall_back_to_language_grounding_sam_for_object_like_parts",
+      "mark_region_source_missing_when_no_reliable_region_exists"
+    ],
+    "geometric_parts": [
+      "collar",
+      "lapel",
+      "neck",
+      "neckline",
+      "sleeve",
+      "cuff",
+      "hem",
+      "waist",
+      "shoulder"
+    ],
+    "language_grounding_parts": [
+      "pocket",
+      "pattern",
+      "decoration"
+    ],
+    "quality_thresholds": {
+      "min_region_area_ratio_of_image": 0.0005,
+      "min_region_area_ratio_of_instance": 0.015,
+      "max_region_area_ratio_of_instance": 0.75,
+      "require_region_intersects_instance": true,
+      "prefer_region_inside_instance": true
+    },
+    "notes": "FashionAI has original attribute labels but no instance/part masks. Local regions are generated labels and must keep region_source/confidence."
+  },
+  "language_query_templates": {
+    "whole_garment": {
+      "aliases_zh": [
+        "整件衣服",
+        "整件服饰",
+        "这件衣服",
+        "服装整体"
+      ],
+      "query_templates_zh": [
+        "这件衣服",
+        "整件服饰",
+        "这件{category_zh}"
+      ]
+    },
+    "collar": {
+      "aliases_zh": [
+        "衣领",
+        "领子",
+        "领部"
+      ],
+      "query_templates_zh": [
+        "这件衣服的衣领",
+        "这件{category_zh}的领子",
+        "衣领设计"
+      ]
+    },
+    "lapel": {
+      "aliases_zh": [
+        "翻领",
+        "驳头",
+        "西装领"
+      ],
+      "query_templates_zh": [
+        "这件衣服的翻领",
+        "这件外套的驳头",
+        "翻领设计"
+      ]
+    },
+    "neck": {
+      "aliases_zh": [
+        "颈部",
+        "领部",
+        "脖颈区域"
+      ],
+      "query_templates_zh": [
+        "这件衣服的颈部设计",
+        "颈部领型",
+        "领部设计"
+      ]
+    },
+    "neckline": {
+      "aliases_zh": [
+        "领口",
+        "领口线",
+        "领口形状"
+      ],
+      "query_templates_zh": [
+        "这件衣服的领口",
+        "领口的设计",
+        "这件{category_zh}的领口形状"
+      ]
+    },
+    "sleeve": {
+      "aliases_zh": [
+        "袖子",
+        "衣袖",
+        "袖身"
+      ],
+      "query_templates_zh": [
+        "这件衣服的袖子",
+        "袖长",
+        "衣袖区域"
+      ]
+    },
+    "cuff": {
+      "aliases_zh": [
+        "袖口",
+        "袖边",
+        "袖端"
+      ],
+      "query_templates_zh": [
+        "这件衣服的袖口",
+        "袖口设计",
+        "衣袖末端"
+      ]
+    },
+    "hem": {
+      "aliases_zh": [
+        "下摆",
+        "衣摆",
+        "底摆",
+        "裙摆"
+      ],
+      "query_templates_zh": [
+        "这件衣服的下摆",
+        "衣服下摆",
+        "裙摆区域"
+      ]
+    },
+    "waist": {
+      "aliases_zh": [
+        "腰部",
+        "腰线",
+        "收腰位置"
+      ],
+      "query_templates_zh": [
+        "这件衣服的腰部",
+        "腰线位置",
+        "收腰设计"
+      ]
+    },
+    "shoulder": {
+      "aliases_zh": [
+        "肩部",
+        "肩线",
+        "肩膀区域"
+      ],
+      "query_templates_zh": [
+        "这件衣服的肩部",
+        "肩部设计",
+        "肩线区域"
+      ]
+    },
+    "pocket": {
+      "aliases_zh": [
+        "口袋",
+        "衣袋",
+        "袋口"
+      ],
+      "query_templates_zh": [
+        "这件衣服的口袋",
+        "口袋设计",
+        "衣袋区域"
+      ]
+    },
+    "pattern": {
+      "aliases_zh": [
+        "图案",
+        "印花",
+        "纹样",
+        "花纹"
+      ],
+      "query_templates_zh": [
+        "这件衣服上的图案",
+        "服饰图案",
+        "印花区域"
+      ]
+    },
+    "decoration": {
+      "aliases_zh": [
+        "装饰",
+        "配饰装饰",
+        "装饰物",
+        "工艺装饰"
+      ],
+      "query_templates_zh": [
+        "这件衣服的装饰",
+        "装饰区域",
+        "服饰上的装饰细节"
+      ]
+    }
+  },
+  "fashionai_attribute_to_target_part": {
+    "skirt_length_labels": {
+      "attribute_id": "attr_skirt_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "skirt"
+      ],
+      "region_generation": {
+        "primary": "use_instance_mask",
+        "fallback": "use_instance_bbox",
+        "confidence": 1.0
+      }
+    },
+    "coat_length_labels": {
+      "attribute_id": "attr_coat_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "outerwear"
+      ],
+      "region_generation": {
+        "primary": "use_instance_mask",
+        "fallback": "use_instance_bbox",
+        "confidence": 1.0
+      }
+    },
+    "collar_design_labels": {
+      "attribute_id": "attr_collar_design",
+      "target_part": "collar",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.2,
+          0.0,
+          0.8,
+          0.35
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.65
+      }
+    },
+    "lapel_design_labels": {
+      "attribute_id": "attr_lapel_design",
+      "target_part": "lapel",
+      "scope": "local",
+      "valid_categories": [
+        "outerwear"
+      ],
+      "region_generation": {
+        "primary": "upper_wide_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.12,
+          0.03,
+          0.88,
+          0.5
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.62
+      }
+    },
+    "neck_design_labels": {
+      "attribute_id": "attr_neck_design",
+      "target_part": "neck",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.25,
+          0.0,
+          0.75,
+          0.32
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.62
+      }
+    },
+    "neckline_design_labels": {
+      "attribute_id": "attr_neckline_design",
+      "target_part": "neckline",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "dress"
+      ],
+      "region_generation": {
+        "primary": "upper_center_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.18,
+          0.0,
+          0.82,
+          0.38
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.66
+      }
+    },
+    "pant_length_labels": {
+      "attribute_id": "attr_pant_length",
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": [
+        "pants"
+      ],
+      "region_generation": {
+        "primary": "use_instance_mask",
+        "fallback": "use_instance_bbox",
+        "confidence": 1.0
+      }
+    },
+    "sleeve_length_labels": {
+      "attribute_id": "attr_sleeve_length",
+      "target_part": "sleeve",
+      "scope": "local",
+      "valid_categories": [
+        "top",
+        "outerwear",
+        "dress"
+      ],
+      "region_generation": {
+        "primary": "upper_side_instance_mask_crop",
+        "bbox_ratio_xyxy": [
+          0.0,
+          0.05,
+          1.0,
+          0.72
+        ],
+        "clip_to_instance_mask": true,
+        "confidence": 0.6
+      }
+    }
+  }
+}

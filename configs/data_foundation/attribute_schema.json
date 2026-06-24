@@ -1,0 +1,172 @@
+{
+  "schema_version": "2026-06-09.fashionai_deepfashion2.v1",
+  "description": "Unified category and fine-grained FashionAI attribute taxonomy for FashionAI + DeepFashion2 processing.",
+  "categories": [
+    "top",
+    "pants",
+    "skirt",
+    "outerwear",
+    "dress",
+    "shoes",
+    "bag",
+    "accessory"
+  ],
+  "category_display_names": {
+    "top": {"zh": "上衣", "en": "top"},
+    "pants": {"zh": "裤子", "en": "pants"},
+    "skirt": {"zh": "裙子", "en": "skirt"},
+    "outerwear": {"zh": "外套", "en": "outerwear"},
+    "dress": {"zh": "连衣裙", "en": "dress"},
+    "shoes": {"zh": "鞋子", "en": "shoes"},
+    "bag": {"zh": "包包", "en": "bag"},
+    "accessory": {"zh": "配饰", "en": "accessory"}
+  },
+  "target_parts": {
+    "whole_garment": {
+      "zh": "整件服饰",
+      "scope": "global",
+      "region_source": "instance_bbox_and_mask"
+    },
+    "collar": {
+      "zh": "衣领",
+      "scope": "local",
+      "region_source": "part_region_from_instance_mask"
+    },
+    "lapel": {
+      "zh": "翻领/驳头",
+      "scope": "local",
+      "region_source": "part_region_from_instance_mask"
+    },
+    "neck": {
+      "zh": "颈部领型",
+      "scope": "local",
+      "region_source": "part_region_from_instance_mask"
+    },
+    "neckline": {
+      "zh": "领口",
+      "scope": "local",
+      "region_source": "part_region_from_instance_mask"
+    },
+    "sleeve": {
+      "zh": "袖子",
+      "scope": "local",
+      "region_source": "part_region_from_instance_mask"
+    }
+  },
+  "attribute_source_types": {
+    "FashionAI_original": "Original supervised FashionAI attribute annotation.",
+    "DINOv2_pseudo": "Pseudo label predicted by the FashionAI-trained DINOv2 attribute model."
+  },
+  "label_rules": {
+    "invisible_value": "Invisible",
+    "ignore_invisible_for_positive_training": true,
+    "fashionai_original_min_confidence": 1.0,
+    "pseudo_label_default_min_confidence": 0.65,
+    "local_part_min_mask_area_ratio": 0.001,
+    "instance_min_mask_area_ratio": 0.002
+  },
+  "deepfashion2_category_map": {
+    "1": "top",
+    "2": "top",
+    "3": "outerwear",
+    "4": "outerwear",
+    "5": "top",
+    "6": "top",
+    "7": "pants",
+    "8": "pants",
+    "9": "skirt",
+    "10": "dress",
+    "11": "dress",
+    "12": "dress",
+    "13": "dress"
+  },
+  "deepfashion2_category_names": {
+    "1": "short sleeve top",
+    "2": "long sleeve top",
+    "3": "short sleeve outwear",
+    "4": "long sleeve outwear",
+    "5": "vest",
+    "6": "sling",
+    "7": "shorts",
+    "8": "trousers",
+    "9": "skirt",
+    "10": "short sleeve dress",
+    "11": "long sleeve dress",
+    "12": "vest dress",
+    "13": "sling dress"
+  },
+  "fashionai_attributes": {
+    "skirt_length_labels": {
+      "attribute_id": "attr_skirt_length",
+      "display_name": {"zh": "裙长", "en": "skirt length"},
+      "values": ["Invisible", "Short Length", "Knee Length", "Midi Length", "Ankle Length", "Floor Length"],
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": ["skirt"],
+      "part_generation": "use_instance_region"
+    },
+    "coat_length_labels": {
+      "attribute_id": "attr_coat_length",
+      "display_name": {"zh": "外套长度", "en": "coat length"},
+      "values": ["Invisible", "High Waist Length", "Regular Length", "Long Length", "Micro Length", "Knee Length", "Midi Length", "Ankle&Floor Length"],
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": ["outerwear"],
+      "part_generation": "use_instance_region"
+    },
+    "collar_design_labels": {
+      "attribute_id": "attr_collar_design",
+      "display_name": {"zh": "衣领设计", "en": "collar design"},
+      "values": ["Invisible", "Shirt Collar", "Peter Pan", "Puritan Collar", "Rib Collar"],
+      "target_part": "collar",
+      "scope": "local",
+      "valid_categories": ["top", "outerwear", "dress"],
+      "part_generation": "derive_local_part_region"
+    },
+    "lapel_design_labels": {
+      "attribute_id": "attr_lapel_design",
+      "display_name": {"zh": "翻领设计", "en": "lapel design"},
+      "values": ["Invisible", "Notched", "Collarless", "Shawl Collar", "Plus Size Shawl"],
+      "target_part": "lapel",
+      "scope": "local",
+      "valid_categories": ["outerwear"],
+      "part_generation": "derive_local_part_region"
+    },
+    "neck_design_labels": {
+      "attribute_id": "attr_neck_design",
+      "display_name": {"zh": "颈部设计", "en": "neck design"},
+      "values": ["Invisible", "Turtle Neck", "Ruffle Semi-High Collar", "Low Turtle Neck", "Draped Collar"],
+      "target_part": "neck",
+      "scope": "local",
+      "valid_categories": ["top", "outerwear", "dress"],
+      "part_generation": "derive_local_part_region"
+    },
+    "neckline_design_labels": {
+      "attribute_id": "attr_neckline_design",
+      "display_name": {"zh": "领口设计", "en": "neckline design"},
+      "values": ["Invisible", "Strapless Neck", "Deep V Neckline", "Straight Neck", "V Neckline", "Square Neckline", "Off Shoulder", "Round Neckline", "Sweat Heart Neck", "One Shoulder Neckline"],
+      "target_part": "neckline",
+      "scope": "local",
+      "valid_categories": ["top", "dress"],
+      "part_generation": "derive_local_part_region"
+    },
+    "pant_length_labels": {
+      "attribute_id": "attr_pant_length",
+      "display_name": {"zh": "裤长", "en": "pant length"},
+      "values": ["Invisible", "Short Pant", "Mid Length", "3/4 Length", "Cropped Pant", "Full Length"],
+      "target_part": "whole_garment",
+      "scope": "global",
+      "valid_categories": ["pants"],
+      "part_generation": "use_instance_region"
+    },
+    "sleeve_length_labels": {
+      "attribute_id": "attr_sleeve_length",
+      "display_name": {"zh": "袖长", "en": "sleeve length"},
+      "values": ["Invisible", "Sleeveless", "Cup Sleeves", "Short Sleeves", "Elbow Sleeves", "3/4 Sleeves", "Wrist Length", "Long Sleeves", "Extra Long Sleeves"],
+      "target_part": "sleeve",
+      "scope": "local",
+      "valid_categories": ["top", "outerwear", "dress"],
+      "part_generation": "derive_local_part_region"
+    }
+  }
+}

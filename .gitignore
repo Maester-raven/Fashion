@@ -1,0 +1,50 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# IDE and OS files
+.DS_Store
+.idea/
+.vscode/
+
+# Project datasets and generated data
+data/*
+!data/.gitkeep
+data_raw/
+data_interim/
+data_final/
+data_unified/
+data_mask2former/
+data_sam_hq/
+data_dinov2/
+
+# Models, checkpoints, engines, and exported artifacts
+models/*
+!models/.gitkeep
+checkpoints/
+work_dirs/
+*.pth
+*.pt
+*.onnx
+*.engine
+
+# Runtime outputs and logs
+outputs/*
+!outputs/.gitkeep
+logs/
+*.log
+*.pid
+
+# Vendored repositories and excluded font asset
+repos/
+SimSun.ttf
