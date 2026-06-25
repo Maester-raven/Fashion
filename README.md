@@ -125,6 +125,7 @@ work_dirs/rtmdet_tensorrt/shared_dual_cls_1024_fp16.engine
 - ONNX 导出
 - TensorRT engine 构建
 - TensorRT pipeline 推理/测速
+- 单图推理 demo 入口
 - PRD 指标评估
 - 配置文件与数据地基脚本检查
 
@@ -203,7 +204,45 @@ python scripts/eval/evaluate_coco_instance_prd_metrics.py \
   --accessory-cloth-contain-thr 0
 ```
 
-### 7.3 运行数据地基相关脚本
+### 7.3 单图推理 demo 入口
+
+当前已有单图入口：
+
+```bash
+python -m fashion_system.instance_segmentation.infer
+```
+
+运行前必须准备：
+
+- `models/tensorrt/shared_dual_cls_1024_fp16.engine`
+- `examples/images/demo.jpg` 或用户自己的图片
+- CUDA / TensorRT / MMDetection / MMCV / MMEngine 兼容环境
+
+`examples/images/demo.jpg` 不随仓库提供，用户需要自行放置图片。
+
+命令模板：
+
+```bash
+PYTHONPATH=src:. python -m fashion_system.instance_segmentation.infer \
+  --config configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py \
+  --engine models/tensorrt/shared_dual_cls_1024_fp16.engine \
+  --image examples/images/demo.jpg \
+  --output-json outputs/demo_prediction.json \
+  --score-thr 0.15 \
+  --nms-pre 300 \
+  --max-per-img 80 \
+  --disable-d1-fusion
+```
+
+也可以使用 demo 脚本：
+
+```bash
+bash scripts/demo/run_single_image.sh
+```
+
+该入口会将单图临时包装为 COCO 格式，并调用现有 `scripts/eval/run_rtmdet_tensorrt_pipeline.py`。当前实现是 v0.1.1-deployable-311 的最小工程入口，不复制或重构 TensorRT pipeline 逻辑。
+
+### 7.4 运行数据地基相关脚本
 
 可先查看脚本帮助或脚本顶部参数定义：
 
@@ -224,9 +263,9 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 - TensorRT engine
 - 原始数据集
 - 预测 JSON
-- `src/fashion_system/instance_segmentation/infer.py`
+- 真实 demo 图片，例如 `examples/images/demo.jpg`
 
-其中 `src/fashion_system/instance_segmentation/infer.py` 是标准单图推理入口的预留位置，后续版本补齐。
+`src/fashion_system/instance_segmentation/infer.py` 已作为最小单图推理入口补齐；后续仍需要继续完善返回格式、可视化输出与错误处理。
 
 ## 9. 3.1.1 历史复现流程
 
@@ -254,9 +293,9 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 
 ## 11. 后续计划
 
-1. 补齐标准单图推理入口 `src/fashion_system/instance_segmentation/infer.py`
-2. 基于现有 TensorRT pipeline 逻辑封装 v0.1.1 标准单图 CLI
-3. 补齐最小 demo 推理入口
+1. 完善 v0.1.1 单图 CLI 的输出格式与可视化能力
+2. 补齐最小 demo 图片与端到端示例记录
+3. 增加单图入口的轻量单元测试
 4. 完成 Fashionpedia 294 属性盘点与映射
 5. 完成 unified schema v2
 6. 完成 FashionAI 实例补全
