@@ -163,7 +163,7 @@ def main():
             outputs["mask_feat"],
         )
         expert_outputs = (
-            outputs["d1_cls_0"], outputs["d1_cls_1"], outputs["d1_cls_2"]
+            outputs.get("d1_cls_0"), outputs.get("d1_cls_1"), outputs.get("d1_cls_2")
         )
         with torch.inference_mode():
             result, relabeled = dual_single_predict(

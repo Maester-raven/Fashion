@@ -307,3 +307,19 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 6. 完成 FashionAI 实例补全
 7. 开始 3.1.2 局部区域定位
 8. 开始 3.1.3 属性提取
+
+### A-only TensorRT deployment note
+
+If only the final A/epoch5 checkpoint is available and the D1 checkpoint is not provided, export ONNX with `--a-only`:
+
+```bash
+python scripts/export/export_rtmdet_dual_cls_onnx.py \
+  --config configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py \
+  --a-checkpoint models/rtmdet/epoch_5.pth \
+  --output models/onnx/shared_dual_cls_1024.onnx \
+  --opset 17 \
+  --batch-size 1 \
+  --a-only
+```
+
+For A-only TensorRT engines, run inference with `--disable-d1-fusion`. The single-image demo script already uses this mode.

@@ -83,7 +83,10 @@ def dual_single_predict(head, outs, d1_scores, img_meta):
         a_cls_scores, d1_scores, bbox_preds, kernel_preds, priors_by_level
     ):
         a_logits = a_logits[0]
-        d1_logits = d1_logits[0]
+        if d1_logits is None:
+            d1_logits = a_logits
+        else:
+            d1_logits = d1_logits[0]
         bbox_pred = bbox_pred[0].permute(1, 2, 0).reshape(-1, head.bbox_coder.encode_size)
         kernel_pred = kernel_pred[0].permute(1, 2, 0).reshape(-1, head.num_gen_params)
         a_scores = a_logits.permute(1, 2, 0).reshape(-1, head.cls_out_channels).sigmoid()
