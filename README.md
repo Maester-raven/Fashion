@@ -1,39 +1,256 @@
 # 多模态驱动的电商服饰细粒度语义增强与智能解析系统
 
-本项目面向电商服饰场景，建设从数据地基、细粒度视觉理解到多模态检索、智能解析与服务部署的一体化系统。当前仓库仅正式整理并提交 **3.1.1 服饰实例分割**及其数据地基相关内容，其余模块为后续迭代预留。
+## 1. 项目简介
 
-## 当前进度
+本项目面向电商服饰场景，目标是构建从商品图片与自然语言查询出发，到服饰实例分割、局部区域定位、属性提取，再到多模态问答、商品标签生成与卖点生成的一体化智能解析系统。
 
-- 已完成：3.1.1 服饰实例分割。
-- 最终版本：**RTMDet-Ins-L A/epoch5 + TensorRT FP16**。
-- 支持 8 类：`top`、`pants`、`skirt`、`outerwear`、`dress`、`shoes`、`bag`、`accessory`。
-- 最终指标：Recall **84.21%**，Precision-like **84.08%**，Mean TP IoU **85.28%**，平均端到端单图时间 **47.84 ms**。
-- 预留但尚未完成：3.1.2 局部定位、3.1.3 属性抽取、3.2、3.3 及 `deploy/serving` 相关能力。
+整体链路可概括为：
+
+```text
+商品图片 + 自然语言查询
+  → 服饰实例分割
+  → 局部区域定位
+  → 属性提取
+  → 多模态问答 / 商品标签 / 卖点生成
+```
+
+当前 GitHub 仓库只正式整理并上传 **3.1.1 服饰实例分割** 与 **数据地基** 相关内容。3.1.2 局部区域定位、3.1.3 属性提取、3.2、3.3 与 serving 等模块目前仅保留目录结构，尚未完成。
+
+本仓库已包含 3.1.1 的 ONNX / TensorRT 部署脚本，但不包含 checkpoint、ONNX、TensorRT engine、原始数据集、预测 JSON 和训练输出。运行部署命令前需要在本地准备模型制品、数据和兼容的 CUDA / TensorRT / MMDetection / MMCV / MMEngine 环境。
+
+## 2. 当前进度
+
+- 已完成：3.1.1 服饰实例分割
+- 最终版本：RTMDet-Ins-L A/epoch5 + 8 类 class-specific threshold + mask overlap conflict resolver + TensorRT FP16
+- 支持 8 类：`top`、`pants`、`skirt`、`outerwear`、`dress`、`shoes`、`bag`、`accessory`
+- Recall：84.21%
+- Precision-like：84.08%
+- Mean TP IoU：85.28%
+- 平均端到端单图时间：47.84 ms
+- 3.1.2 / 3.1.3 / 3.2 / 3.3 / serving 尚未完成
 
 3.1.1 的详细验收结论见 [`docs/module_3_fine_grained_vision/3.1.1_instance_segmentation/final_version.md`](docs/module_3_fine_grained_vision/3.1.1_instance_segmentation/final_version.md)。
 
-## 仓库结构
+## 3. 仓库结构
 
-- `configs/instance_segmentation/`：RTMDet-Ins 配置。
-- `configs/data_foundation/`：统一数据与属性 schema、外部数据集映射。
-- `src/fashion_system/`：系统模块代码骨架；当前仅为后续工程化预留。
-- `scripts/data/`：数据审计、规范化与 review 辅助脚本。
-- `scripts/eval/`：实例分割评测与误差分析脚本。
-- `scripts/export/`：模型导出与部署构建脚本目录。
-- `docs/`：PRD、模块文档、系统设计与周报目录。
-- `data/`、`models/`、`outputs/`：本地运行目录，内容不会提交到 Git。
+- `configs/instance_segmentation/`：3.1.1 服饰实例分割相关 RTMDet-Ins 配置。
+- `configs/data_foundation/`：统一数据 schema、属性 schema 与外部数据集映射。
+- `scripts/data/`：数据来源审计、Fashionpedia 类别/属性审计、FashionAI 切分与 review 辅助脚本。
+- `scripts/eval/`：实例分割评估、误差分析与 TensorRT pipeline 脚本。
+- `scripts/export/`：ONNX 导出与 TensorRT engine 构建脚本。
+- `docs/`：PRD、模块文档、系统设计、周报与 3.1.1 最终版本说明。
+- `src/fashion_system/`：系统工程化代码骨架，包含 common、data_foundation、instance_segmentation、local_grounding、attribute_extraction、multimodal、rag_agent、serving 等预留模块；当前尚未补齐标准单图推理入口 `src/fashion_system/instance_segmentation/infer.py`。
+- `data/`：本地数据目录，已被 `.gitignore` 排除。
+- `models/`：本地模型制品目录，已被 `.gitignore` 排除。
+- `outputs/`：本地输出目录，已被 `.gitignore` 排除。
 
-## 环境说明
+## 4. 环境准备
 
-`requirements.txt` 仅列出从当前锁定环境中筛选出的核心运行与评测依赖，便于快速理解技术栈；完整、可追溯的环境快照以 `requirements.lock.txt` 为准。CUDA、PyTorch 和 TensorRT 需要结合目标机器的驱动与运行时兼容性安装，不能仅依赖通用 CPU 环境直接复现。
-
-AutoDL 正式项目环境名称为 `vibe`。复现前统一执行：
+AutoDL 正式项目环境名称为 `vibe`。进入环境：
 
 ```bash
 source /root/miniconda3/etc/profile.d/conda.sh
 conda activate vibe
 ```
 
-## 数据与模型安全
+安装精简依赖：
 
-原始/中间/统一数据、模型权重、TensorRT engine、训练输出、日志和第三方仓库均由 `.gitignore` 排除，不应提交到远端仓库。文档中出现的 checkpoint 和 engine 路径仅用于记录最终版本，不代表这些二进制文件包含在本仓库中。
+```bash
+pip install -r requirements.txt
+```
+
+说明：
+
+- `requirements.txt` 是从当前环境中提取的精简核心依赖，便于理解项目主要技术栈。
+- `requirements.lock.txt` 是当前环境快照。
+- RTMDet、MMDetection、MMCV、MMEngine、TensorRT、CUDA、PyTorch 与显卡驱动强相关，完整训练、导出和部署环境需要根据目标机器单独确认。
+
+## 5. 数据准备
+
+GitHub 仓库不包含原始数据集。用户需要在本地或服务器上自行准备数据，例如：
+
+```text
+data/
+├── raw/
+│   ├── FashionAI/
+│   ├── DeepFashion2/
+│   └── Fashionpedia/
+├── processed/
+├── manifests/
+└── README.md 或 .gitkeep
+```
+
+`data/` 目录已被 `.gitignore` 排除，不会上传到 GitHub。
+
+## 6. 模型制品准备
+
+GitHub 仓库不包含 checkpoint、ONNX 和 TensorRT engine。建议在本地按如下结构放置模型制品：
+
+```text
+models/
+├── rtmdet/
+│   └── epoch_5.pth
+├── rtmdet_d1/
+│   └── epoch_1.pth
+├── onnx/
+│   └── shared_dual_cls_1024.onnx
+└── tensorrt/
+    └── shared_dual_cls_1024_fp16.engine
+```
+
+说明：
+
+- `models/rtmdet/epoch_5.pth` 是本地放置路径示例，GitHub 不包含该文件。
+- `models/tensorrt/shared_dual_cls_1024_fp16.engine` 是本地生成路径示例，GitHub 不包含该文件。
+- 如果不使用 D1 分支，需要检查导出脚本是否支持跳过 `--d1-checkpoint`。
+
+3.1.1 最终版本的历史服务器路径记录如下：
+
+```text
+checkpoint:
+work_dirs/rtmdet_ins_l_e24_hardft_A_repeat2_headlr_v1/epoch_5.pth
+
+TensorRT engine:
+work_dirs/rtmdet_tensorrt/shared_dual_cls_1024_fp16.engine
+```
+
+这些路径仅用于记录历史最终版本，不表示相关二进制文件已包含在当前仓库中。
+
+## 7. 当前可运行内容
+
+当前整理版可按模板运行或检查以下内容：
+
+- ONNX 导出
+- TensorRT engine 构建
+- TensorRT pipeline 推理/测速
+- PRD 指标评估
+- 配置文件与数据地基脚本检查
+
+运行前必须准备本地模型权重、Fashionpedia val600 或其他 COCO 格式数据，以及 CUDA / TensorRT / MMDetection / MMCV / MMEngine 兼容环境。
+
+### 7.1 查看配置
+
+```bash
+ls configs/instance_segmentation
+ls configs/data_foundation
+```
+
+### 7.2 ONNX / TensorRT 部署命令模板
+
+当前仓库已包含 3 个部署脚本：
+
+- `scripts/export/export_rtmdet_dual_cls_onnx.py`
+- `scripts/export/build_rtmdet_tensorrt_engine.py`
+- `scripts/eval/run_rtmdet_tensorrt_pipeline.py`
+
+```bash
+# 1. 激活环境
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate vibe
+
+# 2. 导出 ONNX
+python scripts/export/export_rtmdet_dual_cls_onnx.py \
+  --config configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py \
+  --a-checkpoint models/rtmdet/epoch_5.pth \
+  --d1-checkpoint models/rtmdet_d1/epoch_1.pth \
+  --output models/onnx/shared_dual_cls_1024.onnx \
+  --opset 17 \
+  --batch-size 1
+
+# 3. 构建 TensorRT FP16 engine
+python scripts/export/build_rtmdet_tensorrt_engine.py \
+  --onnx models/onnx/shared_dual_cls_1024.onnx \
+  --engine models/tensorrt/shared_dual_cls_1024_fp16.engine \
+  --workspace-gb 8 \
+  --fp16
+
+# 4. TensorRT pipeline 推理与测速
+python scripts/eval/run_rtmdet_tensorrt_pipeline.py \
+  --config configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py \
+  --engine models/tensorrt/shared_dual_cls_1024_fp16.engine \
+  --val-json data/fashionpedia8/annotations/val600.json \
+  --data-root data/fashionpedia8 \
+  --output-json outputs/val600_final_predictions.json \
+  --benchmark-json outputs/final_single120_benchmark.json \
+  --warmup 20 \
+  --benchmark-images 120 \
+  --score-thr 0.15 \
+  --nms-pre 300 \
+  --max-per-img 80 \
+  --disable-d1-fusion
+
+# 5. 计算 PRD 指标
+python scripts/eval/evaluate_coco_instance_prd_metrics.py \
+  --gt-json data/fashionpedia8/annotations/val600.json \
+  --pred-segm-json outputs/val600_final_predictions.json \
+  --output-json outputs/val600_prd_metrics.json \
+  --min-score 0.15 \
+  --match-iou 0.05 \
+  --thresholds top=0.325,pants=0.4125,skirt=0.4875,outerwear=0.425,dress=0.35,shoes=0.30,bag=0.3875,accessory=0.4125 \
+  --mask-iou-thr 0.275 \
+  --same-contain-thr 0.75 \
+  --cross-contain-thr 0.775 \
+  --skirt-score-penalty 0.65 \
+  --pants-score-bonus 1.18 \
+  --dress-score-bonus 0.95 \
+  --accessory-cloth-contain-thr 0
+```
+
+### 7.3 运行数据地基相关脚本
+
+可先查看脚本帮助或脚本顶部参数定义：
+
+```bash
+python scripts/data/audit_data_sources.py --help
+python scripts/data/audit_fashionpedia_categories.py --help
+python scripts/data/audit_fashionpedia_attributes.py --help
+```
+
+如果某些脚本不支持 `--help`，请查看脚本顶部参数定义后再运行。
+
+## 8. 当前仓库不包含的内容
+
+当前 GitHub 整理版仍不包含：
+
+- checkpoint
+- ONNX
+- TensorRT engine
+- 原始数据集
+- 预测 JSON
+- `src/fashion_system/instance_segmentation/infer.py`
+
+其中 `src/fashion_system/instance_segmentation/infer.py` 是标准单图推理入口的预留位置，后续版本补齐。
+
+## 9. 3.1.1 历史复现流程
+
+以下内容是历史复现流程 / 服务器原路径记录。当前仓库已经补齐 ONNX / TensorRT 部署脚本，但完整运行仍需要准备本地模型制品、数据集和兼容环境。
+
+1. 激活正式 AutoDL 环境 `vibe`。
+2. 准备 checkpoint：`work_dirs/rtmdet_ins_l_e24_hardft_A_repeat2_headlr_v1/epoch_5.pth`。
+3. 准备 Fashionpedia 统一 8 类 val600 验证集。
+4. 使用 `scripts/export/export_rtmdet_dual_cls_onnx.py` 导出 ONNX。
+5. 使用 `scripts/export/build_rtmdet_tensorrt_engine.py` 构建 TensorRT engine：`work_dirs/rtmdet_tensorrt/shared_dual_cls_1024_fp16.engine`。
+6. 使用 `scripts/eval/run_rtmdet_tensorrt_pipeline.py` 运行 TensorRT pipeline。
+7. 使用 `scripts/eval/evaluate_coco_instance_prd_metrics.py` 计算 PRD metrics。
+
+## 10. GitHub 上传策略
+
+本仓库采用轻量化 GitHub 上传策略：
+
+- 不上传 `data/`
+- 不上传 `models/`
+- 不上传 `outputs/`
+- 不上传 checkpoint、engine、ONNX
+- 不上传 logs、`work_dirs/`、`repos/`
+
+这些内容应保留在本地机器、AutoDL 工作目录或外部对象存储中。
+
+## 11. 后续计划
+
+1. 补齐标准单图推理入口 `src/fashion_system/instance_segmentation/infer.py`
+2. 补齐最小 demo 推理入口
+3. 完成 Fashionpedia 294 属性盘点与映射
+4. 完成 unified schema v2
+5. 完成 FashionAI 实例补全
+6. 开始 3.1.2 局部区域定位
+7. 开始 3.1.3 属性提取

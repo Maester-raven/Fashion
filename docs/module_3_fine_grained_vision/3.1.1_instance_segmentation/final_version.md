@@ -49,12 +49,10 @@ PRD 3.1.1 原始要求为：
 
 ## 8. 当前 GitHub 整理版说明
 
-当前 GitHub 整理版已保留 3.1.1 最终模型说明、配置文件、评估脚本和数据地基相关脚本。
-
-ONNX / TensorRT 导出脚本在本次整理中暂未找到，因此 final_version.md 中的 ONNX / TensorRT 复现命令属于历史复现命令。后续需要补齐：
+当前 GitHub 整理版已保留 3.1.1 最终模型说明、配置文件、评估脚本和数据地基相关脚本，并已补齐 3 个部署脚本：
 
 * scripts/export/export_rtmdet_dual_cls_onnx.py
 * scripts/export/build_rtmdet_tensorrt_engine.py
 * scripts/eval/run_rtmdet_tensorrt_pipeline.py
 
-当前仓库不包含 checkpoint、ONNX、TensorRT engine、原始数据集和训练输出。
+但仓库仍不包含 checkpoint、ONNX、TensorRT engine、原始数据集和训练输出。完整运行前需要在本地准备模型制品、数据集和兼容的 CUDA/TensorRT/MMDetection 环境。
