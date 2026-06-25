@@ -37,11 +37,13 @@
 - `configs/data_foundation/`：统一数据 schema、属性 schema 与外部数据集映射。
 - `scripts/data/`：数据来源审计、Fashionpedia 类别/属性审计、FashionAI 切分与 review 辅助脚本。
 - `scripts/eval/`：实例分割评估、误差分析与 TensorRT pipeline 脚本。
+  - `scripts/eval/benchmark_rtmdet_dual_cls_fusion.py`：TensorRT pipeline 后处理 / 冲突消解依赖脚本。
+  - `scripts/eval/run_rtmdet_dual_cls_single_mask.py`：TensorRT output 转单图实例预测依赖脚本。
 - `scripts/export/`：ONNX 导出与 TensorRT engine 构建脚本。
 - `docs/`：PRD、模块文档、系统设计、周报与 3.1.1 最终版本说明。
 - `src/fashion_system/`：系统工程化代码骨架，包含 common、data_foundation、instance_segmentation、local_grounding、attribute_extraction、multimodal、rag_agent、serving 等预留模块；当前尚未补齐标准单图推理入口 `src/fashion_system/instance_segmentation/infer.py`。
-- `data/`：本地数据目录，已被 `.gitignore` 排除。
-- `models/`：本地模型制品目录，已被 `.gitignore` 排除。
+- `data/`：本地数据目录，已被 `.gitignore` 排除；数据放置说明见 `data/README.md`。
+- `models/`：本地模型制品目录，已被 `.gitignore` 排除；模型制品放置说明见 `models/README.md`。
 - `outputs/`：本地输出目录，已被 `.gitignore` 排除。
 
 ## 4. 环境准备
@@ -142,6 +144,11 @@ ls configs/data_foundation
 - `scripts/export/export_rtmdet_dual_cls_onnx.py`
 - `scripts/export/build_rtmdet_tensorrt_engine.py`
 - `scripts/eval/run_rtmdet_tensorrt_pipeline.py`
+
+TensorRT pipeline 还依赖以下两个辅助脚本，当前仓库已补齐：
+
+- `scripts/eval/benchmark_rtmdet_dual_cls_fusion.py`：后处理 / 冲突消解逻辑。
+- `scripts/eval/run_rtmdet_dual_cls_single_mask.py`：TensorRT output 到单图实例预测的转换逻辑。
 
 ```bash
 # 1. 激活环境
@@ -248,9 +255,10 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 ## 11. 后续计划
 
 1. 补齐标准单图推理入口 `src/fashion_system/instance_segmentation/infer.py`
-2. 补齐最小 demo 推理入口
-3. 完成 Fashionpedia 294 属性盘点与映射
-4. 完成 unified schema v2
-5. 完成 FashionAI 实例补全
-6. 开始 3.1.2 局部区域定位
-7. 开始 3.1.3 属性提取
+2. 基于现有 TensorRT pipeline 逻辑封装 v0.1.1 标准单图 CLI
+3. 补齐最小 demo 推理入口
+4. 完成 Fashionpedia 294 属性盘点与映射
+5. 完成 unified schema v2
+6. 完成 FashionAI 实例补全
+7. 开始 3.1.2 局部区域定位
+8. 开始 3.1.3 属性提取
