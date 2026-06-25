@@ -151,6 +151,12 @@ TensorRT pipeline 还依赖以下两个辅助脚本，当前仓库已补齐：
 - `scripts/eval/benchmark_rtmdet_dual_cls_fusion.py`：后处理 / 冲突消解逻辑。
 - `scripts/eval/run_rtmdet_dual_cls_single_mask.py`：TensorRT output 到单图实例预测的转换逻辑。
 
+Clean-server 部署说明：
+
+- `configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py` 已整理为 GitHub clean 版自包含配置，不再依赖旧服务器 `/root/autodl-tmp/fashion_prd/...` 绝对 `_base_` 路径。
+- `scripts/export/export_rtmdet_dual_cls_onnx.py` 会自动把仓库根目录、`src/` 和 `scripts/eval/` 加入 import path，因此直接运行导出命令时不需要手动设置 `PYTHONPATH`。
+- 如果用户手动运行其他脚本，仍建议先执行：`export PYTHONPATH="$PWD/src:$PWD:$PWD/scripts/eval:${PYTHONPATH:-}"`。
+
 ```bash
 # 1. 激活环境
 source /root/miniconda3/etc/profile.d/conda.sh

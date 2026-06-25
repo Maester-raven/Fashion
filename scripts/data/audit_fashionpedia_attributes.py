@@ -25,7 +25,7 @@ def main():
     parser.add_argument(
         "--project-root",
         type=Path,
-        default=Path("/root/autodl-tmp/fashion_prd"),
+        default=Path("."),
     )
     parser.add_argument(
         "--category-mapping",

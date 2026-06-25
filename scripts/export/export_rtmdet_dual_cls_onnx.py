@@ -5,12 +5,19 @@ from __future__ import annotations
 
 import argparse
 import copy
+import sys
 from pathlib import Path
 
 import torch
 from mmengine.config import Config
 from mmengine.runner import load_state_dict
 from mmdet.apis import init_detector
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+for _path in (_REPO_ROOT, _REPO_ROOT / "src", _REPO_ROOT / "scripts" / "eval"):
+    _path_str = str(_path)
+    if _path_str not in sys.path:
+        sys.path.insert(0, _path_str)
 
 from benchmark_rtmdet_dual_cls_fusion import ema_model_state
 

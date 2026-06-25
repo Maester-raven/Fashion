@@ -1,133 +1,653 @@
+# This config is flattened for the GitHub clean deployable repository.
+# It should not depend on old-server absolute _base_ paths.
 
-_base_ = "/root/autodl-tmp/fashion_prd/checkpoints/rtmdet_ins_l/rtmdet-ins_l_8xb32-300e_coco.py"
-
-classes = ("top", "pants", "skirt", "outerwear", "dress", "shoes", "bag", "accessory")
-metainfo = dict(classes=classes)
-data_root = "/root/autodl-tmp/fashion_prd/"
-
-load_from = "/root/autodl-tmp/fashion_prd/checkpoints/rtmdet_ins_l/rtmdet-ins_l_8xb32-300e_coco_20221124_103237-78d1d652.pth"
-
-base_lr = 2.5e-4
-max_epochs = 24
-stage2_num_epochs = 4
+auto_scale_lr = dict(base_batch_size=16, enable=False)
+backend_args = None
+base_lr = 0.00025
+classes = (
+    'top',
+    'pants',
+    'skirt',
+    'outerwear',
+    'dress',
+    'shoes',
+    'bag',
+    'accessory',
+)
+custom_hooks = [
+    dict(
+        ema_type='ExpMomentumEMA',
+        momentum=0.0002,
+        priority=49,
+        type='EMAHook',
+        update_buffers=True),
+    dict(
+        switch_epoch=20,
+        switch_pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(
+                poly2mask=False,
+                type='LoadAnnotations',
+                with_bbox=True,
+                with_mask=True),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    0.1,
+                    2.0,
+                ),
+                scale=(
+                    1024,
+                    1024,
+                ),
+                type='RandomResize'),
+            dict(
+                allow_negative_crop=True,
+                crop_size=(
+                    1024,
+                    1024,
+                ),
+                recompute_bbox=True,
+                type='RandomCrop'),
+            dict(min_gt_bbox_wh=(
+                1,
+                1,
+            ), type='FilterAnnotations'),
+            dict(type='YOLOXHSVRandomAug'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(
+                pad_val=dict(img=(
+                    114,
+                    114,
+                    114,
+                )),
+                size=(
+                    1024,
+                    1024,
+                ),
+                type='Pad'),
+            dict(type='PackDetInputs'),
+        ],
+        type='PipelineSwitchHook'),
+]
+data_root = ''
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=2,
+        max_keep_ckpts=3,
+        save_best='coco/segm_mAP',
+        type='CheckpointHook'),
+    logger=dict(interval=100, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_scales = [
+    (
+        640,
+        640,
+    ),
+    (
+        320,
+        320,
+    ),
+    (
+        960,
+        960,
+    ),
+]
+img_size = (
+    1024,
+    1024,
+)
 interval = 2
-img_size = (1024, 1024)
-
+load_from = 'checkpoints/rtmdet_ins_l/rtmdet-ins_l_8xb32-300e_coco_20221124_103237-78d1d652.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+max_epochs = 24
+metainfo = dict(
+    classes=(
+        'top',
+        'pants',
+        'skirt',
+        'outerwear',
+        'dress',
+        'shoes',
+        'bag',
+        'accessory',
+    ))
 model = dict(
-    backbone=dict(norm_cfg=dict(type="BN")),
-    neck=dict(norm_cfg=dict(type="BN")),
-    bbox_head=dict(num_classes=8, norm_cfg=dict(type="BN")),
-    test_cfg=dict(score_thr=0.05, nms=dict(type="nms", iou_threshold=0.6), max_per_img=150),
-)
-
+    backbone=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        arch='P5',
+        channel_attention=True,
+        deepen_factor=1,
+        expand_ratio=0.5,
+        norm_cfg=dict(type='BN'),
+        type='CSPNeXt',
+        widen_factor=1),
+    bbox_head=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        anchor_generator=dict(
+            offset=0, strides=[
+                8,
+                16,
+                32,
+            ], type='MlvlPointGenerator'),
+        bbox_coder=dict(type='DistancePointBBoxCoder'),
+        feat_channels=256,
+        in_channels=256,
+        loss_bbox=dict(loss_weight=2.0, type='GIoULoss'),
+        loss_cls=dict(
+            beta=2.0,
+            loss_weight=1.0,
+            type='QualityFocalLoss',
+            use_sigmoid=True),
+        loss_mask=dict(
+            eps=5e-06, loss_weight=2.0, reduction='mean', type='DiceLoss'),
+        norm_cfg=dict(requires_grad=True, type='BN'),
+        num_classes=8,
+        pred_kernel_size=1,
+        share_conv=True,
+        stacked_convs=2,
+        type='RTMDetInsSepBNHead'),
+    data_preprocessor=dict(
+        batch_augments=None,
+        bgr_to_rgb=False,
+        mean=[
+            103.53,
+            116.28,
+            123.675,
+        ],
+        std=[
+            57.375,
+            57.12,
+            58.395,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        expand_ratio=0.5,
+        in_channels=[
+            256,
+            512,
+            1024,
+        ],
+        norm_cfg=dict(type='BN'),
+        num_csp_blocks=3,
+        out_channels=256,
+        type='CSPNeXtPAFPN'),
+    test_cfg=dict(
+        mask_thr_binary=0.5,
+        max_per_img=150,
+        min_bbox_size=0,
+        nms=dict(iou_threshold=0.6, type='nms'),
+        nms_pre=1000,
+        score_thr=0.05),
+    train_cfg=dict(
+        allowed_border=-1,
+        assigner=dict(topk=13, type='DynamicSoftLabelAssigner'),
+        debug=False,
+        pos_weight=-1),
+    type='RTMDet')
 optim_wrapper = dict(
-    type="AmpOptimWrapper",
-    optimizer=dict(type="AdamW", lr=base_lr, weight_decay=0.05),
-    paramwise_cfg=dict(norm_decay_mult=0, bias_decay_mult=0, bypass_duplicate=True),
-    loss_scale="dynamic",
-)
-
+    loss_scale='dynamic',
+    optimizer=dict(lr=0.00025, type='AdamW', weight_decay=0.05),
+    paramwise_cfg=dict(
+        bias_decay_mult=0, bypass_duplicate=True, norm_decay_mult=0),
+    type='AmpOptimWrapper')
 param_scheduler = [
-    dict(type="LinearLR", start_factor=1.0e-5, by_epoch=False, begin=0, end=500),
-    dict(type="CosineAnnealingLR", eta_min=base_lr * 0.05, begin=0, end=max_epochs, T_max=max_epochs, by_epoch=True, convert_to_iter_based=True),
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=1e-05, type='LinearLR'),
+    dict(
+        T_max=24,
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=24,
+        eta_min=1.25e-05,
+        type='CosineAnnealingLR'),
 ]
-
-train_pipeline = [
-    dict(type="LoadImageFromFile", backend_args=None),
-    dict(type="LoadAnnotations", with_bbox=True, with_mask=True, poly2mask=False),
-    dict(type="CachedMosaic", img_scale=img_size, pad_val=114.0),
-    dict(type="RandomResize", scale=(2048, 2048), ratio_range=(0.1, 2.0), keep_ratio=True),
-    dict(type="RandomCrop", crop_size=img_size, recompute_bbox=True, allow_negative_crop=True),
-    dict(type="YOLOXHSVRandomAug"),
-    dict(type="RandomFlip", prob=0.5),
-    dict(type="Pad", size=img_size, pad_val=dict(img=(114, 114, 114))),
-    dict(type="CachedMixUp", img_scale=img_size, ratio_range=(1.0, 1.0), max_cached_images=20, pad_val=(114, 114, 114)),
-    dict(type="FilterAnnotations", min_gt_bbox_wh=(1, 1)),
-    dict(type="PackDetInputs"),
-]
-
-train_pipeline_stage2 = [
-    dict(type="LoadImageFromFile", backend_args=None),
-    dict(type="LoadAnnotations", with_bbox=True, with_mask=True, poly2mask=False),
-    dict(type="RandomResize", scale=img_size, ratio_range=(0.1, 2.0), keep_ratio=True),
-    dict(type="RandomCrop", crop_size=img_size, recompute_bbox=True, allow_negative_crop=True),
-    dict(type="FilterAnnotations", min_gt_bbox_wh=(1, 1)),
-    dict(type="YOLOXHSVRandomAug"),
-    dict(type="RandomFlip", prob=0.5),
-    dict(type="Pad", size=img_size, pad_val=dict(img=(114, 114, 114))),
-    dict(type="PackDetInputs"),
-]
-
-test_pipeline = [
-    dict(type="LoadImageFromFile", backend_args=None),
-    dict(type="Resize", scale=img_size, keep_ratio=True),
-    dict(type="Pad", size=img_size, pad_val=dict(img=(114, 114, 114))),
-    dict(type="LoadAnnotations", with_bbox=True),
-    dict(type="PackDetInputs", meta_keys=("img_id", "img_path", "ori_shape", "img_shape", "scale_factor")),
-]
-
-train_cfg = dict(type="EpochBasedTrainLoop", max_epochs=max_epochs, val_interval=2)
-val_cfg = dict(type="ValLoop")
-test_cfg = dict(type="TestLoop")
-
-train_dataloader = dict(
+randomness = dict(deterministic=False, seed=42)
+resume = False
+stage2_num_epochs = 4
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
     batch_size=2,
+    dataset=dict(
+        ann_file='data_interim/fashionpedia/fashionpedia_val_600_coco.json',
+        backend_args=None,
+        data_prefix=dict(img=''),
+        data_root='',
+        metainfo=dict(
+            classes=(
+                'top',
+                'pants',
+                'skirt',
+                'outerwear',
+                'dress',
+                'shoes',
+                'bag',
+                'accessory',
+            )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1024,
+                1024,
+            ), type='Resize'),
+            dict(
+                pad_val=dict(img=(
+                    114,
+                    114,
+                    114,
+                )),
+                size=(
+                    1024,
+                    1024,
+                ),
+                type='Pad'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file=
+    'data_interim/fashionpedia/fashionpedia_val_600_coco.json',
+    backend_args=None,
+    classwise=True,
+    format_only=False,
+    metric=[
+        'bbox',
+        'segm',
+    ],
+    proposal_nums=(
+        100,
+        1,
+        10,
+    ),
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1024,
+        1024,
+    ), type='Resize'),
+    dict(pad_val=dict(img=(
+        114,
+        114,
+        114,
+    )), size=(
+        1024,
+        1024,
+    ), type='Pad'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(
+    dynamic_intervals=[
+        (
+            280,
+            1,
+        ),
+    ],
+    max_epochs=24,
+    type='EpochBasedTrainLoop',
+    val_interval=2)
+train_dataloader = dict(
+    batch_sampler=None,
+    batch_size=2,
+    dataset=dict(
+        ann_file=
+        'data_interim/fashionpedia/fashionpedia_train_balanced8_copypaste_small_v1_13000img_coco.json',
+        backend_args=None,
+        data_prefix=dict(img=''),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=True, min_size=1),
+        metainfo=dict(
+            classes=(
+                'top',
+                'pants',
+                'skirt',
+                'outerwear',
+                'dress',
+                'shoes',
+                'bag',
+                'accessory',
+            )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(
+                poly2mask=False,
+                type='LoadAnnotations',
+                with_bbox=True,
+                with_mask=True),
+            dict(img_scale=(
+                1024,
+                1024,
+            ), pad_val=114.0, type='CachedMosaic'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    0.1,
+                    2.0,
+                ),
+                scale=(
+                    2048,
+                    2048,
+                ),
+                type='RandomResize'),
+            dict(
+                allow_negative_crop=True,
+                crop_size=(
+                    1024,
+                    1024,
+                ),
+                recompute_bbox=True,
+                type='RandomCrop'),
+            dict(type='YOLOXHSVRandomAug'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(
+                pad_val=dict(img=(
+                    114,
+                    114,
+                    114,
+                )),
+                size=(
+                    1024,
+                    1024,
+                ),
+                type='Pad'),
+            dict(
+                img_scale=(
+                    1024,
+                    1024,
+                ),
+                max_cached_images=20,
+                pad_val=(
+                    114,
+                    114,
+                    114,
+                ),
+                ratio_range=(
+                    1.0,
+                    1.0,
+                ),
+                type='CachedMixUp'),
+            dict(min_gt_bbox_wh=(
+                1,
+                1,
+            ), type='FilterAnnotations'),
+            dict(type='PackDetInputs'),
+        ],
+        type='CocoDataset'),
     num_workers=4,
     persistent_workers=True,
     pin_memory=True,
-    sampler=dict(type="DefaultSampler", shuffle=True),
-    dataset=dict(
-        type="CocoDataset",
-        data_root=data_root,
-        ann_file="data_interim/fashionpedia/fashionpedia_train_balanced8_copypaste_small_v1_13000img_coco.json",
-        data_prefix=dict(img=""),
-        metainfo=metainfo,
-        filter_cfg=dict(filter_empty_gt=True, min_size=1),
-        pipeline=train_pipeline,
-    ),
-)
-
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        poly2mask=False,
+        type='LoadAnnotations',
+        with_bbox=True,
+        with_mask=True),
+    dict(img_scale=(
+        1024,
+        1024,
+    ), pad_val=114.0, type='CachedMosaic'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            0.1,
+            2.0,
+        ),
+        scale=(
+            2048,
+            2048,
+        ),
+        type='RandomResize'),
+    dict(
+        allow_negative_crop=True,
+        crop_size=(
+            1024,
+            1024,
+        ),
+        recompute_bbox=True,
+        type='RandomCrop'),
+    dict(type='YOLOXHSVRandomAug'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(pad_val=dict(img=(
+        114,
+        114,
+        114,
+    )), size=(
+        1024,
+        1024,
+    ), type='Pad'),
+    dict(
+        img_scale=(
+            1024,
+            1024,
+        ),
+        max_cached_images=20,
+        pad_val=(
+            114,
+            114,
+            114,
+        ),
+        ratio_range=(
+            1.0,
+            1.0,
+        ),
+        type='CachedMixUp'),
+    dict(min_gt_bbox_wh=(
+        1,
+        1,
+    ), type='FilterAnnotations'),
+    dict(type='PackDetInputs'),
+]
+train_pipeline_stage2 = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        poly2mask=False,
+        type='LoadAnnotations',
+        with_bbox=True,
+        with_mask=True),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            0.1,
+            2.0,
+        ),
+        scale=(
+            1024,
+            1024,
+        ),
+        type='RandomResize'),
+    dict(
+        allow_negative_crop=True,
+        crop_size=(
+            1024,
+            1024,
+        ),
+        recompute_bbox=True,
+        type='RandomCrop'),
+    dict(min_gt_bbox_wh=(
+        1,
+        1,
+    ), type='FilterAnnotations'),
+    dict(type='YOLOXHSVRandomAug'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(pad_val=dict(img=(
+        114,
+        114,
+        114,
+    )), size=(
+        1024,
+        1024,
+    ), type='Pad'),
+    dict(type='PackDetInputs'),
+]
+tta_model = dict(
+    tta_cfg=dict(max_per_img=100, nms=dict(iou_threshold=0.6, type='nms')),
+    type='DetTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale=(
+                    640,
+                    640,
+                ), type='Resize'),
+                dict(keep_ratio=True, scale=(
+                    320,
+                    320,
+                ), type='Resize'),
+                dict(keep_ratio=True, scale=(
+                    960,
+                    960,
+                ), type='Resize'),
+            ],
+            [
+                dict(prob=1.0, type='RandomFlip'),
+                dict(prob=0.0, type='RandomFlip'),
+            ],
+            [
+                dict(
+                    pad_val=dict(img=(
+                        114,
+                        114,
+                        114,
+                    )),
+                    size=(
+                        960,
+                        960,
+                    ),
+                    type='Pad'),
+            ],
+            [
+                dict(type='LoadAnnotations', with_bbox=True),
+            ],
+            [
+                dict(
+                    meta_keys=(
+                        'img_id',
+                        'img_path',
+                        'ori_shape',
+                        'img_shape',
+                        'scale_factor',
+                        'flip',
+                        'flip_direction',
+                    ),
+                    type='PackDetInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
 val_dataloader = dict(
     batch_size=2,
+    dataset=dict(
+        ann_file='data_interim/fashionpedia/fashionpedia_val_600_coco.json',
+        backend_args=None,
+        data_prefix=dict(img=''),
+        data_root='',
+        metainfo=dict(
+            classes=(
+                'top',
+                'pants',
+                'skirt',
+                'outerwear',
+                'dress',
+                'shoes',
+                'bag',
+                'accessory',
+            )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1024,
+                1024,
+            ), type='Resize'),
+            dict(
+                pad_val=dict(img=(
+                    114,
+                    114,
+                    114,
+                )),
+                size=(
+                    1024,
+                    1024,
+                ),
+                type='Pad'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
     num_workers=4,
     persistent_workers=True,
-    sampler=dict(type="DefaultSampler", shuffle=False),
-    dataset=dict(
-        type="CocoDataset",
-        data_root=data_root,
-        ann_file="data_interim/fashionpedia/fashionpedia_val_600_coco.json",
-        data_prefix=dict(img=""),
-        metainfo=metainfo,
-        test_mode=True,
-        pipeline=test_pipeline,
-    ),
-)
-
-test_dataloader = val_dataloader
-
+    sampler=dict(shuffle=False, type='DefaultSampler'))
 val_evaluator = dict(
-    type="CocoMetric",
-    ann_file=data_root + "data_interim/fashionpedia/fashionpedia_val_600_coco.json",
-    metric=["bbox", "segm"],
-    format_only=False,
+    ann_file=
+    'data_interim/fashionpedia/fashionpedia_val_600_coco.json',
+    backend_args=None,
     classwise=True,
-)
-test_evaluator = val_evaluator
-
-default_hooks = dict(
-    timer=dict(type="IterTimerHook"),
-    logger=dict(type="LoggerHook", interval=100),
-    param_scheduler=dict(type="ParamSchedulerHook"),
-    checkpoint=dict(type="CheckpointHook", interval=2, max_keep_ckpts=3, save_best="coco/segm_mAP"),
-    sampler_seed=dict(type="DistSamplerSeedHook"),
-    visualization=dict(type="DetVisualizationHook"),
-)
-
-custom_hooks = [
-    dict(type="EMAHook", ema_type="ExpMomentumEMA", momentum=0.0002, update_buffers=True, priority=49),
-    dict(type="PipelineSwitchHook", switch_epoch=max_epochs - stage2_num_epochs, switch_pipeline=train_pipeline_stage2),
+    format_only=False,
+    metric=[
+        'bbox',
+        'segm',
+    ],
+    proposal_nums=(
+        100,
+        1,
+        10,
+    ),
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
 ]
-
-log_processor = dict(type="LogProcessor", window_size=50, by_epoch=True)
-randomness = dict(seed=42, deterministic=False)
-auto_scale_lr = dict(enable=False, base_batch_size=16)
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
