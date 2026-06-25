@@ -323,3 +323,47 @@ python scripts/export/export_rtmdet_dual_cls_onnx.py \
 ```
 
 For A-only TensorRT engines, run inference with `--disable-d1-fusion`. The single-image demo script already uses this mode.
+
+## Model checkpoint and release asset
+
+The 3.1.1 checkpoint is not stored inside the Git repository. It is published as a GitHub Release asset for tag `v0.1.2-real-deploy-311`.
+
+- File name: `epoch_5.pth`
+- Model: RTMDet-Ins-L A/epoch5
+- SHA256: `cb5e2ae8916568954882bfc5f5f741e9753c3bfdd969e8441c1f0e6ce3d882da`
+- Local placement after download:
+
+```text
+models/rtmdet/epoch_5.pth
+```
+
+ONNX and TensorRT engine files are not recommended for Git upload. They should be regenerated locally on the target machine from the checkpoint.
+
+Export A-only ONNX:
+
+```bash
+python scripts/export/export_rtmdet_dual_cls_onnx.py \
+  --config configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py \
+  --a-checkpoint models/rtmdet/epoch_5.pth \
+  --output models/onnx/shared_dual_cls_1024.onnx \
+  --opset 17 \
+  --batch-size 1 \
+  --a-only
+```
+
+Build TensorRT FP16 engine locally:
+
+```bash
+python scripts/export/build_rtmdet_tensorrt_engine.py \
+  --onnx models/onnx/shared_dual_cls_1024.onnx \
+  --engine models/tensorrt/shared_dual_cls_1024_fp16.engine \
+  --workspace-gb 8 \
+  --fp16
+```
+
+See also:
+
+- `release_assets/v0.1.2-real-deploy-311/MODEL_ASSET_MANIFEST.md`
+- `docs/3.1.1_MODEL_PROVENANCE.md`
+- `docs/3.1.1_OPTIMIZATION_HISTORY.md`
+
