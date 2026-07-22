@@ -31,17 +31,23 @@ class SamHQRefiner:
         self.predictor = None
         self.audit = {}
 
-    def load(self):
-        validate_file_hash(self.checkpoint_path, self.checkpoint_sha256)
+    def _import_hq(self):
         sys.path = [str(self.repo_root)] + [p for p in sys.path if "sam-hq-official/seginw" not in p]
-        import torch
         import segment_anything
         actual = str(Path(segment_anything.__file__).resolve())
         expected_suffix = "segment_anything/__init__.py"
         if not actual.endswith(expected_suffix) or "seginw/segment_anything" in actual:
             raise RuntimeError(f"wrong_segment_anything_import:{actual}")
+        return segment_anything, actual
+
+    def load(self):
+        validate_file_hash(self.checkpoint_path, self.checkpoint_sha256)
+        import torch
+        segment_anything, actual = self._import_hq()
         from segment_anything import SamPredictor, sam_model_registry
-        model = sam_model_registry[self.model_type](checkpoint=str(self.checkpoint_path))
+        model = sam_model_registry[self.model_type](checkpoint=None)
+        state = torch.load(str(self.checkpoint_path), map_location="cpu")
+        result = model.load_state_dict(state, strict=True)
         hf = [k for k in model.state_dict().keys() if "hf_token" in k]
         if not hf:
             raise RuntimeError("sam_hq_hf_token_missing")
@@ -52,7 +58,7 @@ class SamHQRefiner:
         if not model_device.startswith(self.device):
             raise RuntimeError(f"sam_hq_wrong_device:{model_device}")
         self.predictor = SamPredictor(model)
-        self.audit = {"segment_anything_file": actual, "hf_token_keys": hf, "model_device": model_device}
+        self.audit = {"segment_anything_file": actual, "hf_token_keys": hf, "model_device": model_device, "strict": True, "missing_keys": list(result.missing_keys), "unexpected_keys": list(result.unexpected_keys)}
         return self
 
     def refine(self, image_path, bbox, device=None):

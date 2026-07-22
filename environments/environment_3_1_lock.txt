@@ -1,0 +1,14 @@
+# Human-readable lock snapshot for the validated 3.1 unified probe.
+# This is not a binary artifact and intentionally omits host-specific prefixes.
+python 3.10.20
+torch 2.1.2+cu121
+torchvision 0.16.2+cu121
+mmcv 2.1.0
+mmengine 0.10.7
+mmdet 3.3.0
+numpy 1.26.4
+opencv-python 4.8.1
+validated_project_local_tensorrt 10.13.3.9
+specified_project_requirement_tensorrt 8.6.1
+validation_relationship single_shared_environment_validated_with_project_local_tensorrt
+validation_scope non_sealed_smoke_only

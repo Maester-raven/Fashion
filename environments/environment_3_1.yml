@@ -1,0 +1,27 @@
+name: fashion31-unified
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch=2.1.2
+  - torchvision=0.16.2
+  - pytorch-cuda=12.1
+  - numpy=1.26.4
+  - pillow
+  - pyyaml
+  - pip:
+      - mmcv==2.1.0
+      - mmengine==0.10.7
+      - mmdet==3.3.0
+      - opencv-python==4.8.1.78
+      - pycocotools
+      - onnx
+      - onnxruntime
+      - timm
+      - scipy
+      - tqdm
+      - pytest

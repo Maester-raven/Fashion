@@ -1,0 +1,17 @@
+# Validated 3.1.1 + 3.1.2 runtime core.
+# TensorRT is provided as a project-local runtime outside pip; see docs/3_1_TENSORRT_RUNTIME.md.
+torch==2.1.2
+torchvision==0.16.2
+numpy==1.26.4
+opencv-python==4.8.1.78
+Pillow
+PyYAML
+mmcv==2.1.0
+mmengine==0.10.7
+mmdet==3.3.0
+pycocotools
+onnx
+onnxruntime
+timm
+scipy
+tqdm
