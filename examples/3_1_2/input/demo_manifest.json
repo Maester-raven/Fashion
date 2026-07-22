@@ -1,0 +1,146 @@
+[
+  {
+    "bbox_parent": [
+      46.0,
+      23.0,
+      156.0,
+      143.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 1,
+    "image": "examples/input/demo_01_parent_crop.jpg",
+    "query": "find all neckline regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      189.0,
+      65.0,
+      276.0,
+      426.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 2,
+    "image": "examples/input/demo_02_parent_crop.jpg",
+    "query": "find all sleeve regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      90.0,
+      13.0,
+      164.0,
+      43.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 3,
+    "image": "examples/input/demo_03_parent_crop.jpg",
+    "query": "find all neckline regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      180.0,
+      55.0,
+      206.0,
+      142.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 4,
+    "image": "examples/input/demo_04_parent_crop.jpg",
+    "query": "find all sleeve regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      145.0,
+      16.0,
+      198.0,
+      38.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 5,
+    "image": "examples/input/demo_05_parent_crop.jpg",
+    "query": "find all collar regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      141.0,
+      38.0,
+      181.0,
+      166.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 6,
+    "image": "examples/input/demo_06_parent_crop.jpg",
+    "query": "find all decoration regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      14.0,
+      81.0,
+      90.0,
+      296.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 7,
+    "image": "examples/input/demo_07_parent_crop.jpg",
+    "query": "find all sleeve regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      83.0,
+      22.0,
+      146.0,
+      107.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 8,
+    "image": "examples/input/demo_08_parent_crop.jpg",
+    "query": "find all neckline regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      10.0,
+      36.0,
+      38.0,
+      103.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 9,
+    "image": "examples/input/demo_09_parent_crop.jpg",
+    "query": "find all sleeve regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      57.0,
+      22.0,
+      212.0,
+      94.0
+    ],
+    "case": "positive_sam_hq",
+    "demo_id": 10,
+    "image": "examples/input/demo_10_parent_crop.jpg",
+    "query": "find all neckline regions on this garment"
+  },
+  {
+    "bbox_parent": [
+      46.0,
+      23.0,
+      156.0,
+      143.0
+    ],
+    "case": "no_target_success",
+    "demo_id": 11,
+    "image": "examples/input/demo_01_parent_crop.jpg",
+    "query": "demo no_target_success"
+  },
+  {
+    "bbox_parent": [
+      46.0,
+      23.0,
+      156.0,
+      143.0
+    ],
+    "case": "selector_empty",
+    "demo_id": 12,
+    "image": "examples/input/demo_01_parent_crop.jpg",
+    "query": "demo selector_empty"
+  }
+]

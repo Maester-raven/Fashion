@@ -1,0 +1,12 @@
+{
+  "query_text": "demo selector_empty",
+  "presence": true,
+  "status": "present_but_no_candidate",
+  "instances": [],
+  "presence_score": 0.9,
+  "limitations": {
+    "returns_all_instances": false,
+    "supports_spatial_constraints": false,
+    "supports_relation_constraints": false
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "query_text": "demo no_target_success",
+  "presence": false,
+  "status": "empty",
+  "instances": [],
+  "limitations": {
+    "returns_all_instances": false,
+    "supports_spatial_constraints": false,
+    "supports_relation_constraints": false
+  }
+}

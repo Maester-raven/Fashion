@@ -1,0 +1,85 @@
+{
+  "query_text": "find all sleeve regions on this garment",
+  "presence": true,
+  "status": "success",
+  "instances": [
+    {
+      "bbox": [
+        180.0,
+        55.0,
+        206.0,
+        142.0
+      ],
+      "mask_rle": {
+        "size": [
+          290,
+          216
+        ],
+        "counts": [
+          52884,
+          35,
+          237,
+          54,
+          232,
+          58,
+          226,
+          64,
+          224,
+          66,
+          218,
+          72,
+          214,
+          76,
+          210,
+          79,
+          210,
+          80,
+          210,
+          80,
+          210,
+          80,
+          210,
+          79,
+          211,
+          79,
+          211,
+          79,
+          211,
+          79,
+          210,
+          79,
+          210,
+          80,
+          211,
+          79,
+          211,
+          79,
+          212,
+          78,
+          211,
+          79,
+          211,
+          79,
+          217,
+          73,
+          278,
+          12,
+          3053
+        ]
+      },
+      "presence_score": 0.9,
+      "selector_score": 0.8,
+      "mask_quality_score": 0.9364516139030457,
+      "candidate_id": "mock_candidate",
+      "candidate_source": "demo_adapter",
+      "selector_name": "smoke_r1_top1",
+      "mask_source": "sam_hq_bbox_prompt",
+      "precise_mask_guaranteed": false
+    }
+  ],
+  "limitations": {
+    "returns_all_instances": false,
+    "supports_spatial_constraints": false,
+    "supports_relation_constraints": false
+  }
+}

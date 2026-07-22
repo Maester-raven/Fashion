@@ -1,0 +1,44 @@
+{
+  "mask": {
+    "canvas": "parent_crop",
+    "encoding": "coco_uncompressed_rle",
+    "precise_mask_guaranteed": false,
+    "primary": "sam_hq_bbox_prompt",
+    "runtime_fallback": "coarse_bbox_runtime_fallback"
+  },
+  "paths": {
+    "model_root": "${FASHION_MODEL_ROOT}",
+    "project_root": "${FASHION_PROJECT_ROOT}",
+    "sam_hq_repo_root": "${SAM_HQ_REPO_ROOT}"
+  },
+  "pipeline": {
+    "final_selector": "smoke_r1_top1",
+    "max_output_instances": 1,
+    "route_a_empty_fallback": false
+  },
+  "presence": {
+    "checkpoint": "work_dirs/train_presence_gate_v1/train_presence_gate_g2/best_model.pth",
+    "checkpoint_sha256": "45d18f9c2a52c5aa922fb597cce0630d88f0d5e839075cfc527d4d92a07b9389",
+    "policy_sha256": "64640fca8fb5676f8d7bae0e950d4300ee36e3f3ae9d04075b95cdacc9e346b6",
+    "temperature": 1.5,
+    "threshold": 0.35
+  },
+  "sam_hq": {
+    "checkpoint": "checkpoints/sam_hq/sam_hq_vit_l.pth",
+    "checkpoint_sha256": "e1a6c385d62bf005ded91a54d5ec55c985cfc4103ef89c08d90f39f04934c343",
+    "forbidden_module_fragment": "seginw/segment_anything",
+    "model_type": "vit_l",
+    "multimask_output": false,
+    "repo": "repos/sam-hq-official",
+    "required_module_suffix": "segment_anything/__init__.py"
+  },
+  "selector": {
+    "checkpoint": "work_dirs/train_3_1_2_route_a_only_ranker_with_fp_control_and_teacher_distillation_smoke_v1/train_route_a_only_ranker_r1/best_model.pth",
+    "checkpoint_sha256": "3a2897974bfddb69bd2adf11419f48289222ae9f1ea080ad8e12eb257d220350",
+    "final_topk": 1,
+    "nms": 0.5,
+    "original_max_outputs": 2,
+    "policy_sha256": "d062dbeab8dd5934f78978bbb8ce53a734f57985cbd0536fe6410d408596a073",
+    "threshold": 0.65
+  }
+}

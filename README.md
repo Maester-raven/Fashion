@@ -367,3 +367,48 @@ See also:
 - `docs/3.1.1_MODEL_PROVENANCE.md`
 - `docs/3.1.1_OPTIMIZATION_HISTORY.md`
 
+## 8. 3.1.2 Generic Single-hit BBox-Mask MVP v1
+
+仓库已新增 3.1.2 阶段性 MVP：`generic natural-language query + parent garment crop -> 0 或 1 个 bbox + mask`。
+
+入口：
+
+- Python API: `from fashion_3_1_2 import SingleHitBBoxMaskPipeline`
+- CLI: `python scripts/inference/infer_3_1_2_single_hit_bbox_mask.py --help`
+- 文档: [`docs/3_1_2/README.md`](docs/3_1_2/README.md)
+
+冻结推理链：
+
+```text
+Presence Gate -> Smoke R1 Top-1 -> SAM-HQ bbox prompt -> coarse bbox runtime fallback
+```
+
+支持 generic positive / generic no-target、bbox、SAM-HQ predicted mask 和 coarse runtime fallback。不支持完整多实例、constrained-single、spatial/ordinal/quadrant、relation query、target count，也不满足生产级精度和延迟。
+
+正式 Sealed 指标：
+
+- Positive BBox@0.5 = 0.5173
+- Positive Mask@0.5 = 0.2806
+- Positive Conditional Mask mIoU = 0.2787
+- Positive BBox-Mask E2E = 0.2733
+- Natural MVP Mixed Score = 0.5322
+- Natural Macro MVP Score = 0.5107
+- Natural No-target Empty Accuracy = 0.7575
+- Balanced v2 MVP Mixed Score = 0.4953
+- Balanced v2 Macro MVP Score = 0.4808
+- Balanced v2 No-target Empty Accuracy = 0.7160
+
+性能边界：
+
+- official_localization_latency_target_ms = 30
+- 当前测量仅覆盖 SAM-HQ mask refinement stage
+- Positive SAM-HQ avg/P50/P95 = 122.64ms / 211.15ms / 220.15ms
+- Natural SAM-HQ avg/P50/P95 = 112.46ms / 208.79ms / 220.18ms
+- full_end_to_end_latency_measured = false
+- sam_hq_stage_alone_exceeds_target = true
+- latency_target_met = false
+- production_quality_target_met = false
+- mask_quality_limited = true
+
+路径通过 `--model-root`、`--project-root`、`FASHION_MODEL_ROOT`、`FASHION_PROJECT_ROOT` 和 `SAM_HQ_REPO_ROOT` 配置；仓库不包含 checkpoint、数据集、Sealed predictions 或 Future Test 资产。
+
