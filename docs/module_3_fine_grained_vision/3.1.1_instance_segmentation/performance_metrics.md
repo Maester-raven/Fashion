@@ -52,7 +52,7 @@
 远端项目路径：
 
 ```bash
-cd /root/autodl-tmp/fashion_prd
+cd <PROJECT_ROOT>
 ```
 
 打印指标定义：

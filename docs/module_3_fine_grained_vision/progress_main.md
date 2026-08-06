@@ -3,7 +3,7 @@
 AutoDL workspace:
 
 ```bash
-/root/autodl-tmp/fashion_prd
+<PROJECT_ROOT>
 ```
 
 Conda environment:
@@ -42,7 +42,7 @@ conda activate vibe
 Generated on AutoDL under:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_taxonomy
+<PROJECT_ROOT>/data_taxonomy
 ```
 
 Important files:
@@ -86,7 +86,7 @@ skirt, outerwear, and dress.
 The partial SAM-HQ automatic-mask output is kept only as a diagnostic baseline:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_interim/fashionai_samhq_instances_multi.jsonl
+<PROJECT_ROOT>/data_interim/fashionai_samhq_instances_multi.jsonl
 ```
 
 It was stopped at 3,580 processed FashionAI images and should not be used as the
@@ -110,8 +110,8 @@ Implementation progress:
 - Full COCO outputs on AutoDL:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_mask2former/deepfashion2_coco/deepfashion2_train_coco_instance.json
-/root/autodl-tmp/fashion_prd/data_mask2former/deepfashion2_coco/deepfashion2_val_coco_instance.json
+<PROJECT_ROOT>/data_mask2former/deepfashion2_coco/deepfashion2_train_coco_instance.json
+<PROJECT_ROOT>/data_mask2former/deepfashion2_coco/deepfashion2_val_coco_instance.json
 ```
 
 - Full COCO counts:
@@ -128,25 +128,25 @@ val instances:      52490
 - A 5-step Mask2Former smoke training run completed successfully and saved a checkpoint under:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/mask2former_fashion_smoke/final
+<PROJECT_ROOT>/work_dirs/mask2former_fashion_smoke/final
 ```
 
 - A 20k-image / 3k-step Mask2Former training run completed successfully:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/run_mask2former_20k_train.sh
+<PROJECT_ROOT>/scripts/run_mask2former_20k_train.sh
 ```
 
 - Background log:
 
 ```bash
-/root/autodl-tmp/fashion_prd/logs/mask2former_20k_3ksteps.log
+<PROJECT_ROOT>/logs/mask2former_20k_3ksteps.log
 ```
 
 - Output directory:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/mask2former_fashion_20k_3ksteps
+<PROJECT_ROOT>/work_dirs/mask2former_fashion_20k_3ksteps
 ```
 
 - Current confirmed training events:
@@ -171,13 +171,13 @@ category label map.
 FashionAI inference after training should use:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/run_fashionai_mask2former_segment.sh
+<PROJECT_ROOT>/scripts/run_fashionai_mask2former_segment.sh
 ```
 
 Default output:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_interim/fashionai_mask2former_instances.jsonl
+<PROJECT_ROOT>/data_interim/fashionai_mask2former_instances.jsonl
 ```
 
 20-image FashionAI smoke inference report:
@@ -195,8 +195,8 @@ missing_image/read_error/empty_prediction: 0
 Full FashionAI inference log and PID:
 
 ```bash
-/root/autodl-tmp/fashion_prd/logs/fashionai_mask2former_segment.log
-/root/autodl-tmp/fashion_prd/logs/fashionai_mask2former_segment.pid
+<PROJECT_ROOT>/logs/fashionai_mask2former_segment.log
+<PROJECT_ROOT>/logs/fashionai_mask2former_segment.pid
 ```
 
 Full FashionAI inference report:
@@ -219,7 +219,7 @@ category, such as `pant_length -> pants`, `skirt_length -> skirt`, and
 inference:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/repair_fashionai_category_bindings.py
+<PROJECT_ROOT>/scripts/repair_fashionai_category_bindings.py
 ```
 
 Repair report:
@@ -234,13 +234,13 @@ unrepaired: 11
 The repaired FashionAI instance file is:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_interim/fashionai_mask2former_instances_repaired.jsonl
+<PROJECT_ROOT>/data_interim/fashionai_mask2former_instances_repaired.jsonl
 ```
 
 The current FashionAI unified region file is:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_unified/fashionai_unified_regions.jsonl
+<PROJECT_ROOT>/data_unified/fashionai_unified_regions.jsonl
 ```
 
 Unified FashionAI region counts:
@@ -261,9 +261,9 @@ remaining invalid category-attribute bindings: 11
 FashionAI unified regions were converted into DINOv2 training manifests:
 
 ```bash
-/root/autodl-tmp/fashion_prd/data_dinov2/fashionai_attributes/fashionai_dinov2_global.jsonl
-/root/autodl-tmp/fashion_prd/data_dinov2/fashionai_attributes/fashionai_dinov2_local.jsonl
-/root/autodl-tmp/fashion_prd/data_dinov2/fashionai_attributes/dinov2_attribute_data_report.json
+<PROJECT_ROOT>/data_dinov2/fashionai_attributes/fashionai_dinov2_global.jsonl
+<PROJECT_ROOT>/data_dinov2/fashionai_attributes/fashionai_dinov2_local.jsonl
+<PROJECT_ROOT>/data_dinov2/fashionai_attributes/dinov2_attribute_data_report.json
 ```
 
 The remaining 11 invalid category-attribute bindings were skipped.
@@ -282,15 +282,15 @@ Training used frozen DINOv2 ViT-B/14 features and lightweight per-attribute
 classification heads:
 
 ```bash
-/root/autodl-tmp/fashion_prd/checkpoints/dinov2/hub/checkpoints/dinov2_vitb14_pretrain.pth
-/root/autodl-tmp/fashion_prd/scripts/run_dinov2_attribute_heads.sh
+<PROJECT_ROOT>/checkpoints/dinov2/hub/checkpoints/dinov2_vitb14_pretrain.pth
+<PROJECT_ROOT>/scripts/run_dinov2_attribute_heads.sh
 ```
 
 Model outputs:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_attribute_heads/global/attribute_heads.pt
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_attribute_heads/local/attribute_heads.pt
+<PROJECT_ROOT>/work_dirs/dinov2_attribute_heads/global/attribute_heads.pt
+<PROJECT_ROOT>/work_dirs/dinov2_attribute_heads/local/attribute_heads.pt
 ```
 
 Final validation results after 12 epochs:
@@ -321,7 +321,7 @@ Mask2Former-guided SAM-HQ refinement improves segmentation quality.
 Evaluation script:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/evaluate_mask2former_samhq_refinement.py
+<PROJECT_ROOT>/scripts/evaluate_mask2former_samhq_refinement.py
 ```
 
 Experiment setup:
@@ -340,9 +340,9 @@ SAM-HQ mode: multimask output, select highest SAM-HQ score
 Outputs:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/refinement_eval_val200_shuffle/summary.json
-/root/autodl-tmp/fashion_prd/work_dirs/refinement_eval_val200_shuffle/matched_instances.jsonl
-/root/autodl-tmp/fashion_prd/work_dirs/refinement_eval_val200_shuffle/image_stats.jsonl
+<PROJECT_ROOT>/work_dirs/refinement_eval_val200_shuffle/summary.json
+<PROJECT_ROOT>/work_dirs/refinement_eval_val200_shuffle/matched_instances.jsonl
+<PROJECT_ROOT>/work_dirs/refinement_eval_val200_shuffle/image_stats.jsonl
 ```
 
 Overall results:
@@ -399,16 +399,16 @@ available on FashionAI.
 Evaluation script:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/evaluate_samhq_only_vs_guided.py
+<PROJECT_ROOT>/scripts/evaluate_samhq_only_vs_guided.py
 ```
 
 Outputs:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/samhq_only_vs_guided_val200_shuffle/summary.json
-/root/autodl-tmp/fashion_prd/work_dirs/samhq_only_vs_guided_val200_shuffle/image_stats.jsonl
-/root/autodl-tmp/fashion_prd/work_dirs/samhq_only_vs_guided_val200_shuffle/samhq_auto_only_matches.jsonl
-/root/autodl-tmp/fashion_prd/work_dirs/samhq_only_vs_guided_val200_shuffle/mask2former_guided_samhq_matches.jsonl
+<PROJECT_ROOT>/work_dirs/samhq_only_vs_guided_val200_shuffle/summary.json
+<PROJECT_ROOT>/work_dirs/samhq_only_vs_guided_val200_shuffle/image_stats.jsonl
+<PROJECT_ROOT>/work_dirs/samhq_only_vs_guided_val200_shuffle/samhq_auto_only_matches.jsonl
+<PROJECT_ROOT>/work_dirs/samhq_only_vs_guided_val200_shuffle/mask2former_guided_samhq_matches.jsonl
 ```
 
 Experiment setup:
@@ -485,14 +485,14 @@ subset:
 Evaluation script:
 
 ```bash
-/root/autodl-tmp/fashion_prd/scripts/evaluate_guided_prompt_filter_ablation.py
+<PROJECT_ROOT>/scripts/evaluate_guided_prompt_filter_ablation.py
 ```
 
 Outputs:
 
 ```bash
-/root/autodl-tmp/fashion_prd/work_dirs/guided_ablation_val200/summary.json
-/root/autodl-tmp/fashion_prd/work_dirs/guided_ablation_val200_fallback/summary.json
+<PROJECT_ROOT>/work_dirs/guided_ablation_val200/summary.json
+<PROJECT_ROOT>/work_dirs/guided_ablation_val200_fallback/summary.json
 ```
 
 No-fallback 200-image results:
@@ -597,9 +597,9 @@ Mask2Former proposal
 Output directories:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/nms_nested_val200
-/root/autodl-tmp/fashion_prd/work_dirs/nms_nested_val200_gentle
-/root/autodl-tmp/fashion_prd/work_dirs/nms_nested_val200_ultrag
+<PROJECT_ROOT>/work_dirs/nms_nested_val200
+<PROJECT_ROOT>/work_dirs/nms_nested_val200_gentle
+<PROJECT_ROOT>/work_dirs/nms_nested_val200_ultrag
 ```
 
 The raw refined masks before NMS are the current best balanced guided setting:
@@ -702,8 +702,8 @@ Mask2Former proposal
 Output directories:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/proposal_fusion_val50
-/root/autodl-tmp/fashion_prd/work_dirs/proposal_fusion_val200
+<PROJECT_ROOT>/work_dirs/proposal_fusion_val50
+<PROJECT_ROOT>/work_dirs/proposal_fusion_val200
 ```
 
 The deployable query-score fusion variants performed as follows:
@@ -791,14 +791,14 @@ SAM-HQ automatic masks on DeepFashion2 train subset
 Script:
 
 ```text
-/root/autodl-tmp/fashion_prd/scripts/train_eval_dinov2_sam_candidate_reranker.py
+<PROJECT_ROOT>/scripts/train_eval_dinov2_sam_candidate_reranker.py
 ```
 
 Output directories:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_reranker_smoke
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_reranker_train300_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_reranker_smoke
+<PROJECT_ROOT>/work_dirs/dinov2_sam_reranker_train300_val200
 ```
 
 Smoke test (`train=30 images`, `val=20 images`) ran end-to-end:
@@ -924,7 +924,7 @@ fusion score:
 Output directory:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_reranker_train300_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_reranker_train300_val200
 ```
 
 Training setup:
@@ -1022,19 +1022,19 @@ quality-aware DINOv2 SAM candidate reranker.
 Script update:
 
 ```text
-/root/autodl-tmp/fashion_prd/scripts/train_eval_dinov2_sam_candidate_reranker.py
+<PROJECT_ROOT>/scripts/train_eval_dinov2_sam_candidate_reranker.py
 ```
 
 Loaded checkpoint:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_reranker_train300_val200/dinov2_sam_candidate_reranker.pt
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_reranker_train300_val200/dinov2_sam_candidate_reranker.pt
 ```
 
 Output directory:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_reranker_sweep_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_reranker_sweep_val200
 ```
 
 Validation results (`val=200`, `330 GT instances`):
@@ -1122,15 +1122,15 @@ can push recall beyond 80% while also improving Precision-like.
 Command:
 
 ```bash
-python /root/autodl-tmp/fashion_prd/scripts/train_eval_dinov2_sam_candidate_reranker.py \
-  --train-json /root/autodl-tmp/fashion_prd/data_mask2former/deepfashion2_coco/deepfashion2_train_coco_instance.json \
-  --val-json /root/autodl-tmp/fashion_prd/data_mask2former/deepfashion2_coco/deepfashion2_val_coco_instance.json \
-  --mask2former-dir /root/autodl-tmp/fashion_prd/work_dirs/mask2former_fashion_20k_3ksteps/final \
-  --sam-hq-repo /root/autodl-tmp/fashion_prd/repos/sam-hq-official \
-  --sam-hq-checkpoint /root/autodl-tmp/fashion_prd/work_dirs/sam_hq_fashion_20k_1epoch/sam_hq_epoch_0.pth \
-  --dinov2-repo /root/autodl-tmp/fashion_prd/repos/dinov2-official \
-  --dinov2-checkpoint /root/autodl-tmp/fashion_prd/checkpoints/dinov2/hub/checkpoints/dinov2_vitb14_pretrain.pth \
-  --output-dir /root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_reranker_train1000_val200 \
+python <PROJECT_ROOT>/scripts/train_eval_dinov2_sam_candidate_reranker.py \
+  --train-json <PROJECT_ROOT>/data_mask2former/deepfashion2_coco/deepfashion2_train_coco_instance.json \
+  --val-json <PROJECT_ROOT>/data_mask2former/deepfashion2_coco/deepfashion2_val_coco_instance.json \
+  --mask2former-dir <PROJECT_ROOT>/work_dirs/mask2former_fashion_20k_3ksteps/final \
+  --sam-hq-repo <PROJECT_ROOT>/repos/sam-hq-official \
+  --sam-hq-checkpoint <PROJECT_ROOT>/work_dirs/sam_hq_fashion_20k_1epoch/sam_hq_epoch_0.pth \
+  --dinov2-repo <PROJECT_ROOT>/repos/dinov2-official \
+  --dinov2-checkpoint <PROJECT_ROOT>/checkpoints/dinov2/hub/checkpoints/dinov2_vitb14_pretrain.pth \
+  --output-dir <PROJECT_ROOT>/work_dirs/dinov2_sam_quality_reranker_train1000_val200 \
   --max-train-images 1000 \
   --max-val-images 200 \
   --shuffle-val \
@@ -1143,7 +1143,7 @@ python /root/autodl-tmp/fashion_prd/scripts/train_eval_dinov2_sam_candidate_rera
 Output directory:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_reranker_train1000_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_reranker_train1000_val200
 ```
 
 Training setup:
@@ -1309,8 +1309,8 @@ Effect:
 Evaluation output directories:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_catdup_train1000_eval_val200
-/root/autodl-tmp/fashion_prd/work_dirs/dinov2_sam_quality_catdup_precision_train1000_eval_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_catdup_train1000_eval_val200
+<PROJECT_ROOT>/work_dirs/dinov2_sam_quality_catdup_precision_train1000_eval_val200
 ```
 
 DeepFashion2 validation results (`val=200`, `330 GT instances`):
@@ -1434,14 +1434,14 @@ Inputs:
 Script:
 
 ```text
-/root/autodl-tmp/fashion_prd/scripts/train_eval_final_mask_verifier.py
+<PROJECT_ROOT>/scripts/train_eval_final_mask_verifier.py
 ```
 
 Output directories:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/final_mask_verifier_train300_val200
-/root/autodl-tmp/fashion_prd/work_dirs/final_mask_verifier_train300_eval_sweep_val200
+<PROJECT_ROOT>/work_dirs/final_mask_verifier_train300_val200
+<PROJECT_ROOT>/work_dirs/final_mask_verifier_train300_eval_sweep_val200
 ```
 
 Training setup:
@@ -1587,13 +1587,13 @@ category-aware high-recall pool
 Script:
 
 ```text
-/root/autodl-tmp/fashion_prd/scripts/train_eval_final_mask_verifier.py
+<PROJECT_ROOT>/scripts/train_eval_final_mask_verifier.py
 ```
 
 Output directory:
 
 ```text
-/root/autodl-tmp/fashion_prd/work_dirs/final_mask_verifier_hybrid_sweep_val200
+<PROJECT_ROOT>/work_dirs/final_mask_verifier_hybrid_sweep_val200
 ```
 
 DeepFashion2 validation results (`val=200`, `330 GT instances`):
