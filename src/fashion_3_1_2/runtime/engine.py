@@ -14,6 +14,7 @@ SCK=ASSET_ROOT/'smoke_r1/best_model.pth'
 SAM_REPO=REPO/'third_party/3_1_2/sam_hq'
 SAM_CK=ASSET_ROOT/'sam_hq/sam_hq_vit_l.pth'
 from fashion_3_1_2.components import smoke_r1 as SM
+from fashion_3_1_2.runtime.constraints import apply_spatial_constraints, constraint_names, parse_spatial_constraints
 os.environ['TRANSFORMERS_OFFLINE']='1';os.environ['HF_HUB_OFFLINE']='1'
 def view_boxes():
  out=[[0,0,1,1]]
@@ -103,7 +104,8 @@ class Fashion312ZeroOneNFunctionalRuntime:
   if parent_crop_path:image_path=parent_crop_path;im=Image.open(image_path).convert('RGB');parent_bbox=[0,0,im.width,im.height]
   else:im=Image.open(image_path).convert('RGB')
   parent=im.crop(tuple(parent_bbox));t1=time.time();pr,present,qt=self.presence(parent,query_text);t2=time.time()
-  base={'runtime_name':'3_1_2_zero_one_n_functional_release_v1','query_text':query_text,'supported_scope':'no_target' if not present else 'generic_all','presence_probability':pr,'presence_decision':'present' if present else 'empty','maximum_supported_outputs':10,'functional_release':True,'prd_accuracy_target_passed':False,'prd_latency_target_passed':False,'warnings':[]}
+  constraints=parse_spatial_constraints(query_text)
+  base={'runtime_name':'3_1_2_zero_one_n_functional_release_v1','query_text':query_text,'supported_scope':'no_target' if not present else ('constrained_subset' if constraints else 'generic_all'),'spatial_constraints':constraint_names(constraints),'presence_probability':pr,'presence_decision':'present' if present else 'empty','maximum_supported_outputs':10,'functional_release':True,'prd_accuracy_target_passed':False,'prd_latency_target_passed':False,'warnings':[]}
   if not present:return {**base,'instances':[],'instance_count':0,'cardinality_status':'empty','latency_ms':{'parent_crop':(t1-t0)*1000,'presence':(t2-t1)*1000,'total':(t2-t0)*1000}}
   rows=self.route(image_path,parent_bbox,runid);t3=time.time()
   if not rows:return {**base,'instances':[],'instance_count':0,'cardinality_status':'empty','warnings':['present_but_no_candidate'],'latency_ms':{'route_a':(t3-t2)*1000,'total':(t3-t0)*1000}}
@@ -115,4 +117,6 @@ class Fashion312ZeroOneNFunctionalRuntime:
   if not keep:keep=[order[0]]
   relboxes=[[cs[i]['bbox'][0]-parent_bbox[0],cs[i]['bbox'][1]-parent_bbox[1],cs[i]['bbox'][2]-parent_bbox[0],cs[i]['bbox'][3]-parent_bbox[1]] for i in keep];t5=time.time();masks=self.sam_masks(parent,relboxes);t6=time.time();inst=[]
   for rank,(i,b,(m,src,ms)) in enumerate(zip(keep,relboxes,masks),1):inst.append({'instance_id':f'{runid}:{rank:02d}','candidate_id':cs[i]['candidate_id'],'rank':rank,'bbox_xyxy_parent':[float(v) for v in b],'bbox_score':float(cs[i]['score_route']),'semantic_score':float(scores[i]),'mask_rle':rle(m),'mask_source':src,'mask_score':ms})
-  return {**base,'instances':inst,'instance_count':len(inst),'cardinality_status':'single' if len(inst)==1 else 'multiple','latency_ms':{'parent_crop':(t1-t0)*1000,'presence':(t2-t1)*1000,'route_a':(t3-t2)*1000,'fashionclip_smoke_r1':(t4-t3)*1000,'threshold_nms':(t5-t4)*1000,'sam_hq_rle':(t6-t5)*1000,'total':(t6-t0)*1000},'route_a_raw_candidate_count':len(rows),'route_a_cap500_count':min(500,len(rows))}
+  if constraints:
+   inst=apply_spatial_constraints(inst,constraints,parent.width,parent.height)
+  return {**base,'instances':inst,'instance_count':len(inst),'cardinality_status':'empty' if len(inst)==0 else ('single' if len(inst)==1 else 'multiple'),'latency_ms':{'parent_crop':(t1-t0)*1000,'presence':(t2-t1)*1000,'route_a':(t3-t2)*1000,'fashionclip_smoke_r1':(t4-t3)*1000,'threshold_nms':(t5-t4)*1000,'sam_hq_rle':(t6-t5)*1000,'total':(t6-t0)*1000},'route_a_raw_candidate_count':len(rows),'route_a_cap500_count':min(500,len(rows))}

@@ -1,3 +1,5 @@
+# legacy_convenience_environment
+# not_primary_cleanroom_install_path
 name: fashion31-unified
 channels:
   - pytorch

@@ -9,4 +9,4 @@ sam_hq: {per_bbox: true, fallback: coarse_bbox_runtime_fallback}
 prd_accuracy_target_passed: false
 prd_latency_target_passed: false
 production_quality_passed: false
-constrained_subset_supported: false
+constrained_subset_supported: true

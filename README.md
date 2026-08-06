@@ -2,6 +2,24 @@
 
 多模态驱动的电商服饰细粒度语义增强与智能解析系统。
 
+## Full Fashion 3.1 GitHub Deployment
+
+Use module-level environments for clean-room deployment. The unified `environments/environment_3_1.yml` is retained as a legacy convenience file and may solve slowly on some platforms.
+
+```bash
+git clone https://github.com/Maester-raven/Fashion.git
+cd Fashion
+python scripts/setup_module_environment.py --module 3.1.1 --backend conda --prefix .venvs/fashion311
+python scripts/setup_module_environment.py --module 3.1.2 --backend conda --prefix .venvs/fashion312
+python scripts/setup_module_environment.py --module 3.1.3 --backend venv --prefix .venvs/fashion313
+python scripts/download_models.py --module all --model-dir models --backend curl --resume --install
+python scripts/download_models.py --module all --model-dir models --verify-only
+```
+
+3.1.1 TensorRT engines are generated on the target machine from `epoch_5.pth`. 3.1.2 supports generic_all, constrained_subset, and no_target without a fixed `part_name` input. 3.1.3 keeps the accepted runtime interface. See [`docs/3_1_FULL_DEPLOYMENT.md`](docs/3_1_FULL_DEPLOYMENT.md).
+
+多模态驱动的电商服饰细粒度语义增强与智能解析系统。
+
 ## Current Module Status
 
 - **3.1.1 服饰实例分割**: repository contains the TensorRT/MMDetection deployment utilities and documentation already published for the instance-segmentation foundation.
@@ -243,17 +261,7 @@ models/
 - `models/tensorrt/shared_dual_cls_1024_fp16.engine` 是本地生成路径示例，GitHub 不包含该文件。
 - 如果不使用 D1 分支，需要检查导出脚本是否支持跳过 `--d1-checkpoint`。
 
-3.1.1 最终版本的历史服务器路径记录如下：
-
-```text
-checkpoint:
-work_dirs/rtmdet_ins_l_e24_hardft_A_repeat2_headlr_v1/epoch_5.pth
-
-TensorRT engine:
-work_dirs/rtmdet_tensorrt/shared_dual_cls_1024_fp16.engine
-```
-
-这些路径仅用于记录历史最终版本，不表示相关二进制文件已包含在当前仓库中。
+3.1.1 GitHub 部署路径使用 Release 资产 `v0.1.2-real-deploy-311/epoch_5.pth`，下载后放置为 `models/rtmdet/epoch_5.pth`。TensorRT engine 是目标机器生成产物，推荐输出到 `models/tensorrt/shared_dual_cls_1024_fp16.engine`。
 
 ## 7. 当前可运行内容
 
@@ -410,17 +418,14 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 
 `src/fashion_system/instance_segmentation/infer.py` 已作为最小单图推理入口补齐；后续仍需要继续完善返回格式、可视化输出与错误处理。
 
-## 9. 3.1.1 历史复现流程
+## 9. 3.1.1 GitHub Release 复现流程
 
-以下内容是历史复现流程 / 服务器原路径记录。当前仓库已经补齐 ONNX / TensorRT 部署脚本，但完整运行仍需要准备本地模型制品、数据集和兼容环境。
-
-1. 激活正式 AutoDL 环境 `vibe`。
-2. 准备 checkpoint：`work_dirs/rtmdet_ins_l_e24_hardft_A_repeat2_headlr_v1/epoch_5.pth`。
-3. 准备 Fashionpedia 统一 8 类 val600 验证集。
-4. 使用 `scripts/export/export_rtmdet_dual_cls_onnx.py` 导出 ONNX。
-5. 使用 `scripts/export/build_rtmdet_tensorrt_engine.py` 构建 TensorRT engine：`work_dirs/rtmdet_tensorrt/shared_dual_cls_1024_fp16.engine`。
-6. 使用 `scripts/eval/run_rtmdet_tensorrt_pipeline.py` 运行 TensorRT pipeline。
-7. 使用 `scripts/eval/evaluate_coco_instance_prd_metrics.py` 计算 PRD metrics。
+1. 使用 `scripts/setup_module_environment.py --module 3.1.1` 创建模块环境。
+2. 使用 `scripts/download_models.py --module 3.1.1 --model-dir models --backend curl --resume` 下载 `epoch_5.pth`。
+3. 使用 `scripts/3_1_1/export_onnx.py` 导出 ONNX。
+4. 使用 `scripts/3_1_1/build_tensorrt.py` 在目标机器构建 TensorRT engine。
+5. 使用 `scripts/3_1_1/run_inference.py` 运行单图推理，或使用 `scripts/eval/run_rtmdet_tensorrt_pipeline.py` 运行 COCO 格式批量推理。
+6. 使用 `scripts/eval/evaluate_coco_instance_prd_metrics.py` 计算 PRD metrics。
 
 ## 10. GitHub 上传策略
 
@@ -430,7 +435,7 @@ python scripts/data/audit_fashionpedia_attributes.py --help
 - 不上传 `models/`
 - 不上传 `outputs/`
 - 不上传 checkpoint、engine、ONNX
-- 不上传 logs、`work_dirs/`、`repos/`
+- 不上传 logs、本地实验目录或外部源码缓存
 
 这些内容应保留在本地机器、AutoDL 工作目录或外部对象存储中。
 
