@@ -1,0 +1,5 @@
+{
+  "image": "examples/example.jpg",
+  "target_mask": "examples/target_mask.png",
+  "parent_mask": "examples/parent_mask.png"
+}

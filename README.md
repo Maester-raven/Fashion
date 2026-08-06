@@ -1,3 +1,140 @@
+# Fashion
+
+多模态驱动的电商服饰细粒度语义增强与智能解析系统。
+
+## Current Module Status
+
+- **3.1.1 服饰实例分割**: repository contains the TensorRT/MMDetection deployment utilities and documentation already published for the instance-segmentation foundation.
+- **3.1.2 语言引导局部定位**: repository contains the Generic Single-hit BBox-Mask MVP runtime and docs.
+- **3.1.3 细粒度 Design 属性提取**: this release candidate adds a deployable Native Design runtime that consumes an RGB image, a target mask, and an optional parent mask, then returns ranked Design attribute candidates as JSON.
+
+## Fashion 3.1.3 Quick Start
+
+```bash
+git clone https://github.com/Maester-raven/Fashion.git
+cd Fashion
+python -m pip install -e .
+python -m pip install -r requirements_3_1_3_runtime.txt
+```
+
+Model weights are not yet hosted publicly. Place the two checkpoint files under `models/` or pass custom paths at runtime:
+
+| File | SHA256 |
+| --- | --- |
+| `models/fashion313_attribute_model_v1.pth` | `2842eeea66c79cf03ae3b5958859dc150669d8e76914edf6089b64a011853920` |
+| `models/fashion313_region_family_model_v1.pth` | `06c3711e88721eaa135f1ece750c2911fb55a76b8e2b90b4d489bcefdec12bfb` |
+
+Verify assets after placement:
+
+```bash
+python scripts/verify_assets.py \
+  --attribute-checkpoint models/fashion313_attribute_model_v1.pth \
+  --region-family-checkpoint models/fashion313_region_family_model_v1.pth
+```
+
+### Python API
+
+```python
+from fashion313_runtime import Fashion313Runtime
+
+runtime = Fashion313Runtime(
+    attribute_checkpoint="models/fashion313_attribute_model_v1.pth",
+    region_family_checkpoint="models/fashion313_region_family_model_v1.pth",
+    device="cuda",
+)
+
+result = runtime.predict(
+    image="examples/3_1_3/example.jpg",
+    target_mask="examples/3_1_3/target_mask.png",
+    parent_mask="examples/3_1_3/parent_mask.png",
+)
+print(result)
+```
+
+### CLI
+
+```bash
+python -m fashion313_runtime.cli \
+  --image examples/3_1_3/example.jpg \
+  --target-mask examples/3_1_3/target_mask.png \
+  --parent-mask examples/3_1_3/parent_mask.png \
+  --attribute-checkpoint models/fashion313_attribute_model_v1.pth \
+  --region-family-checkpoint models/fashion313_region_family_model_v1.pth \
+  --output examples/outputs/fashion313_result.json
+```
+
+## 3.1.3 Input And Output
+
+Inputs:
+
+- RGB product image as a path, PIL image, or NumPy RGB array.
+- Target mask as PNG, NumPy binary mask, polygon, or uncompressed COCO RLE.
+- Optional parent mask for local-part contexts. Compressed RLE is not a formally supported input in this release.
+
+Output schema excerpt:
+
+```json
+{
+  "status": "ok",
+  "region_family": {"id": "sleeve", "confidence": 0.98},
+  "active_tasks": ["sleeve__sleeve_design", "sleeve__sleeve_length"],
+  "predictions": [
+    {
+      "task_id": "sleeve__sleeve_design",
+      "candidate_count": 3,
+      "candidates": [
+        {"attribute_id": 123, "attribute_name": "example", "confidence": 0.91, "rank": 1}
+      ]
+    }
+  ]
+}
+```
+
+Formal 3.1.3 scope: **8 tasks** and **69 Fashionpedia Native Design attributes**.
+
+## Accuracy
+
+The current reported accuracy is from development parent-disjoint OOF validation, not an independent hidden test set.
+
+- Top3 Micro: `7118 / 7636 = 93.22%`
+- Top3 Macro: `89.66%`
+
+## Performance
+
+Measured on NVIDIA RTX 4080 SUPER, batch=1, warm in-memory model, G1 GPU preprocessing, GC-controlled protocol:
+
+- Average: `19.93 ms`
+- P50: `19.88 ms`
+- P95: `21.71 ms`
+- P99: `23.19 ms`
+- P99.9: `24.64 ms`
+
+This is not a guarantee that every machine is below 20 ms. CPU latency has not been formally accepted.
+
+## Limitations
+
+- Native Design only: 8 tasks / 69 attributes.
+- CUDA GPU is required for accepted runtime performance.
+- CPU performance is not formally accepted.
+- Model files are distributed separately and must be placed or downloaded before real inference.
+- Compressed RLE is not formally supported.
+- Reported accuracy is development OOF, not an independent hidden test.
+- Different hardware, drivers, CUDA, PyTorch, or TensorRT environments can change latency and small numerical details.
+
+## More Documentation
+
+- [3.1.3 Install](docs/3_1_3/INSTALL.md)
+- [3.1.3 API](docs/3_1_3/API.md)
+- [3.1.3 Model Assets](docs/3_1_3/MODEL_ASSETS.md)
+- [3.1.3 Accuracy](docs/3_1_3/ACCURACY.md)
+- [3.1.3 Benchmark](docs/3_1_3/BENCHMARK.md)
+- [3.1.3 Limitations](docs/3_1_3/LIMITATIONS.md)
+- [3.1.3 Troubleshooting](docs/3_1_3/TROUBLESHOOTING.md)
+
+---
+
+## Existing Repository README Before 3.1.3 Integration
+
 # 多模态驱动的电商服饰细粒度语义增强与智能解析系统
 
 ## 1. 项目简介
@@ -153,7 +290,7 @@ TensorRT pipeline 还依赖以下两个辅助脚本，当前仓库已补齐：
 
 Clean-server 部署说明：
 
-- `configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py` 已整理为 GitHub clean 版自包含配置，不再依赖旧服务器 `/root/autodl-tmp/fashion_prd/...` 绝对 `_base_` 路径。
+- `configs/instance_segmentation/rtmdet_ins_l_fashionpedia8_copypaste13000_1024_e24_v1.py` 已整理为 GitHub clean 版自包含配置，不再依赖旧实验服务器绝对 `_base_` 路径。
 - `scripts/export/export_rtmdet_dual_cls_onnx.py` 会自动把仓库根目录、`src/` 和 `scripts/eval/` 加入 import path，因此直接运行导出命令时不需要手动设置 `PYTHONPATH`。
 - 如果用户手动运行其他脚本，仍建议先执行：`export PYTHONPATH="$PWD/src:$PWD:$PWD/scripts/eval:${PYTHONPATH:-}"`。
 
@@ -411,4 +548,3 @@ Presence Gate -> Smoke R1 Top-1 -> SAM-HQ bbox prompt -> coarse bbox runtime fal
 - mask_quality_limited = true
 
 路径通过 `--model-root`、`--project-root`、`FASHION_MODEL_ROOT`、`FASHION_PROJECT_ROOT` 和 `SAM_HQ_REPO_ROOT` 配置；仓库不包含 checkpoint、数据集、Sealed predictions 或 Future Test 资产。
-

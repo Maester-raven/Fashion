@@ -1,0 +1,148 @@
+{
+  "groups": {
+    "collar__style_named_garment": {
+      "group_name": "collar__style_named_garment",
+      "group_id": "collar__style_named_garment",
+      "class_count": 2,
+      "class_value_ids": [
+        "162",
+        "170"
+      ],
+      "class_value_names": [
+        "regular (collar)",
+        "stand-away (collar)"
+      ],
+      "label_to_index": {
+        "regular (collar)": 0,
+        "stand-away (collar)": 1
+      },
+      "index_to_label": {
+        "0": "regular (collar)",
+        "1": "stand-away (collar)"
+      },
+      "train_count": 1626,
+      "val_count": 81,
+      "unseen_val_class": [],
+      "train_missing_class": [],
+      "val_missing_class": []
+    },
+    "neckline__part_design_neckline": {
+      "group_name": "neckline__part_design_neckline",
+      "group_id": "neckline__part_design_neckline",
+      "class_count": 8,
+      "class_value_ids": [
+        "182",
+        "183",
+        "185",
+        "186",
+        "187",
+        "189",
+        "190",
+        "200"
+      ],
+      "class_value_names": [
+        "round (neck)",
+        "v-neck",
+        "oval (neck)",
+        "u-neck",
+        "sweetheart (neckline)",
+        "boat (neck)",
+        "scoop (neck)",
+        "straight across (neck)"
+      ],
+      "label_to_index": {
+        "round (neck)": 0,
+        "v-neck": 1,
+        "oval (neck)": 2,
+        "u-neck": 3,
+        "sweetheart (neckline)": 4,
+        "boat (neck)": 5,
+        "scoop (neck)": 6,
+        "straight across (neck)": 7
+      },
+      "index_to_label": {
+        "0": "round (neck)",
+        "1": "v-neck",
+        "2": "oval (neck)",
+        "3": "u-neck",
+        "4": "sweetheart (neckline)",
+        "5": "boat (neck)",
+        "6": "scoop (neck)",
+        "7": "straight across (neck)"
+      },
+      "train_count": 19378,
+      "val_count": 685,
+      "unseen_val_class": [],
+      "train_missing_class": [],
+      "val_missing_class": []
+    },
+    "pocket__style_named_garment": {
+      "group_name": "pocket__style_named_garment",
+      "group_id": "pocket__style_named_garment",
+      "class_count": 5,
+      "class_value_ids": [
+        "218",
+        "219",
+        "222",
+        "223",
+        "224"
+      ],
+      "class_value_names": [
+        "patch (pocket)",
+        "welt (pocket)",
+        "slash (pocket)",
+        "curved (pocket)",
+        "flap (pocket)"
+      ],
+      "label_to_index": {
+        "patch (pocket)": 0,
+        "welt (pocket)": 1,
+        "slash (pocket)": 2,
+        "curved (pocket)": 3,
+        "flap (pocket)": 4
+      },
+      "index_to_label": {
+        "0": "patch (pocket)",
+        "1": "welt (pocket)",
+        "2": "slash (pocket)",
+        "3": "curved (pocket)",
+        "4": "flap (pocket)"
+      },
+      "train_count": 21989,
+      "val_count": 519,
+      "unseen_val_class": [],
+      "train_missing_class": [],
+      "val_missing_class": []
+    },
+    "sleeve__length_sleeve": {
+      "group_name": "sleeve__length_sleeve",
+      "group_id": "sleeve__length_sleeve",
+      "class_count": 3,
+      "class_value_ids": [
+        "158",
+        "159",
+        "160"
+      ],
+      "class_value_names": [
+        "elbow-length",
+        "three quarter (length)",
+        "wrist-length"
+      ],
+      "label_to_index": {
+        "elbow-length": 0,
+        "three quarter (length)": 1,
+        "wrist-length": 2
+      },
+      "index_to_label": {
+        "0": "elbow-length",
+        "1": "three quarter (length)",
+        "2": "wrist-length"
+      },
+      "train_count": 38873,
+      "val_count": 1073,
+      "unseen_val_class": [],
+      "train_missing_class": [],
+      "val_missing_class": []
+    }
+  }
+}

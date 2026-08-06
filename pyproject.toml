@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fashion313-runtime"
+version = "0.1.0rc1"
+description = "Fashion 3.1.3 Native Design G1 GPU runtime release candidate"
+requires-python = ">=3.10"
+dependencies = ["torch", "numpy", "Pillow"]
+
+[project.scripts]
+fashion313-infer = "fashion313_runtime.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

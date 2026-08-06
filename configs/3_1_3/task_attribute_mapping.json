@@ -1,0 +1,218 @@
+{
+  "collar__collar_design": {
+    "class_ids": [
+      "161",
+      "162",
+      "163",
+      "164",
+      "165",
+      "166",
+      "167",
+      "168",
+      "169",
+      "170",
+      "171",
+      "172",
+      "173"
+    ],
+    "class_names": [
+      "asymmetric (collar)",
+      "regular (collar)",
+      "shirt (collar)",
+      "polo (collar)",
+      "chelsea (collar)",
+      "banded (collar)",
+      "mandarin (collar)",
+      "peter pan (collar)",
+      "bow (collar)",
+      "stand-away (collar)",
+      "jabot (collar)",
+      "sailor (collar)",
+      "oversized (collar)"
+    ],
+    "id_to_index": {
+      "161": 0,
+      "162": 1,
+      "163": 2,
+      "164": 3,
+      "165": 4,
+      "166": 5,
+      "167": 6,
+      "168": 7,
+      "169": 8,
+      "170": 9,
+      "171": 10,
+      "172": 11,
+      "173": 12
+    }
+  },
+  "garment_instance__closure_opening_design": {
+    "class_ids": [
+      "225",
+      "226",
+      "227",
+      "228",
+      "229",
+      "230",
+      "231",
+      "232",
+      "233",
+      "234"
+    ],
+    "class_names": [
+      "single breasted",
+      "double breasted",
+      "lace up",
+      "wrapping",
+      "zip-up",
+      "fly (opening)",
+      "chained (opening)",
+      "buckled (opening)",
+      "toggled (opening)",
+      "no opening"
+    ],
+    "id_to_index": {
+      "225": 0,
+      "226": 1,
+      "227": 2,
+      "228": 3,
+      "229": 4,
+      "230": 5,
+      "231": 6,
+      "232": 7,
+      "233": 8,
+      "234": 9
+    }
+  },
+  "garment_instance__garment_length": {
+    "class_ids": [
+      "146",
+      "147",
+      "148",
+      "149",
+      "150",
+      "151",
+      "152",
+      "153",
+      "154",
+      "155"
+    ],
+    "class_names": [
+      "above-the-hip (length)",
+      "hip (length)",
+      "micro (length)",
+      "mini (length)",
+      "above-the-knee (length)",
+      "knee (length)",
+      "below the knee (length)",
+      "midi",
+      "maxi (length)",
+      "floor (length)"
+    ],
+    "id_to_index": {
+      "146": 0,
+      "147": 1,
+      "148": 2,
+      "149": 3,
+      "150": 4,
+      "151": 5,
+      "152": 6,
+      "153": 7,
+      "154": 8,
+      "155": 9
+    }
+  },
+  "garment_instance__waistline_design": {
+    "class_ids": [
+      "139",
+      "140",
+      "141",
+      "142",
+      "143",
+      "144",
+      "145"
+    ],
+    "class_names": [
+      "empire waistline",
+      "dropped waistline",
+      "high waist",
+      "normal waist",
+      "low waist",
+      "basque (wasitline)",
+      "no waistline"
+    ],
+    "id_to_index": {
+      "139": 0,
+      "140": 1,
+      "141": 2,
+      "142": 3,
+      "143": 4,
+      "144": 5,
+      "145": 6
+    }
+  },
+  "sleeve__sleeve_design": {
+    "class_ids": [
+      "206",
+      "207",
+      "208",
+      "209",
+      "210",
+      "211",
+      "212",
+      "213",
+      "214",
+      "215",
+      "216"
+    ],
+    "class_names": [
+      "raglan (sleeve)",
+      "cap (sleeve)",
+      "tulip (sleeve)",
+      "puff (sleeve)",
+      "bell (sleeve)",
+      "circular flounce (sleeve)",
+      "poet (sleeve)",
+      "dolman (sleeve), batwing (sleeve)",
+      "bishop (sleeve)",
+      "leg of mutton (sleeve)",
+      "kimono (sleeve)"
+    ],
+    "id_to_index": {
+      "206": 0,
+      "207": 1,
+      "208": 2,
+      "209": 3,
+      "210": 4,
+      "211": 5,
+      "212": 6,
+      "213": 7,
+      "214": 8,
+      "215": 9,
+      "216": 10
+    }
+  },
+  "sleeve__sleeve_length": {
+    "class_ids": [
+      "156",
+      "157",
+      "158",
+      "159",
+      "160"
+    ],
+    "class_names": [
+      "sleeveless",
+      "short (length)",
+      "elbow-length",
+      "three quarter (length)",
+      "wrist-length"
+    ],
+    "id_to_index": {
+      "156": 0,
+      "157": 1,
+      "158": 2,
+      "159": 3,
+      "160": 4
+    }
+  }
+}

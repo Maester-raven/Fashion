@@ -48,3 +48,14 @@ logs/
 # Vendored repositories and excluded font asset
 repos/
 SimSun.ttf
+
+# Fashion 3.1.3 model/runtime artifacts
+models/*.pth
+models/*.pt
+models/*.onnx
+models/*.engine
+!models/README.md
+!models/model_asset_manifest.json
+examples/outputs/*.json
+benchmark_runtime_summary.json
+*.partial

@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "region_family": {
+    "id": "example",
+    "confidence": 0.0
+  },
+  "active_tasks": [],
+  "predictions": [],
+  "runtime_metadata": {
+    "runtime_version": "0.1.0rc1",
+    "preprocessing_backend": "g1_gpu",
+    "candidate_policy": "transparent_softmax_top3_baseline_v1",
+    "device": "cuda"
+  },
+  "warnings": []
+}

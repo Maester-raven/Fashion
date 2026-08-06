@@ -1,0 +1,350 @@
+{
+  "attributes": [
+    {
+      "attribute_id": "161",
+      "attribute_name": "asymmetric (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "162",
+      "attribute_name": "regular (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "163",
+      "attribute_name": "shirt (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "164",
+      "attribute_name": "polo (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "165",
+      "attribute_name": "chelsea (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "166",
+      "attribute_name": "banded (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "167",
+      "attribute_name": "mandarin (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "168",
+      "attribute_name": "peter pan (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "169",
+      "attribute_name": "bow (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "170",
+      "attribute_name": "stand-away (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "171",
+      "attribute_name": "jabot (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "172",
+      "attribute_name": "sailor (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "173",
+      "attribute_name": "oversized (collar)",
+      "task_id": "collar__collar_design"
+    },
+    {
+      "attribute_id": "225",
+      "attribute_name": "single breasted",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "226",
+      "attribute_name": "double breasted",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "227",
+      "attribute_name": "lace up",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "228",
+      "attribute_name": "wrapping",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "229",
+      "attribute_name": "zip-up",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "230",
+      "attribute_name": "fly (opening)",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "231",
+      "attribute_name": "chained (opening)",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "232",
+      "attribute_name": "buckled (opening)",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "233",
+      "attribute_name": "toggled (opening)",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "234",
+      "attribute_name": "no opening",
+      "task_id": "garment_instance__closure_opening_design"
+    },
+    {
+      "attribute_id": "146",
+      "attribute_name": "above-the-hip (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "147",
+      "attribute_name": "hip (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "148",
+      "attribute_name": "micro (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "149",
+      "attribute_name": "mini (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "150",
+      "attribute_name": "above-the-knee (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "151",
+      "attribute_name": "knee (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "152",
+      "attribute_name": "below the knee (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "153",
+      "attribute_name": "midi",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "154",
+      "attribute_name": "maxi (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "155",
+      "attribute_name": "floor (length)",
+      "task_id": "garment_instance__garment_length"
+    },
+    {
+      "attribute_id": "139",
+      "attribute_name": "empire waistline",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "140",
+      "attribute_name": "dropped waistline",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "141",
+      "attribute_name": "high waist",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "142",
+      "attribute_name": "normal waist",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "143",
+      "attribute_name": "low waist",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "144",
+      "attribute_name": "basque (wasitline)",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "145",
+      "attribute_name": "no waistline",
+      "task_id": "garment_instance__waistline_design"
+    },
+    {
+      "attribute_id": "206",
+      "attribute_name": "raglan (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "207",
+      "attribute_name": "cap (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "208",
+      "attribute_name": "tulip (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "209",
+      "attribute_name": "puff (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "210",
+      "attribute_name": "bell (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "211",
+      "attribute_name": "circular flounce (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "212",
+      "attribute_name": "poet (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "213",
+      "attribute_name": "dolman (sleeve), batwing (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "214",
+      "attribute_name": "bishop (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "215",
+      "attribute_name": "leg of mutton (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "216",
+      "attribute_name": "kimono (sleeve)",
+      "task_id": "sleeve__sleeve_design"
+    },
+    {
+      "attribute_id": "156",
+      "attribute_name": "sleeveless",
+      "task_id": "sleeve__sleeve_length"
+    },
+    {
+      "attribute_id": "157",
+      "attribute_name": "short (length)",
+      "task_id": "sleeve__sleeve_length"
+    },
+    {
+      "attribute_id": "158",
+      "attribute_name": "elbow-length",
+      "task_id": "sleeve__sleeve_length"
+    },
+    {
+      "attribute_id": "159",
+      "attribute_name": "three quarter (length)",
+      "task_id": "sleeve__sleeve_length"
+    },
+    {
+      "attribute_id": "160",
+      "attribute_name": "wrist-length",
+      "task_id": "sleeve__sleeve_length"
+    },
+    {
+      "attribute_id": "182",
+      "attribute_name": "round (neck)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "183",
+      "attribute_name": "v-neck",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "185",
+      "attribute_name": "oval (neck)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "186",
+      "attribute_name": "u-neck",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "187",
+      "attribute_name": "sweetheart (neckline)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "189",
+      "attribute_name": "boat (neck)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "190",
+      "attribute_name": "scoop (neck)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "200",
+      "attribute_name": "straight across (neck)",
+      "task_id": "neckline"
+    },
+    {
+      "attribute_id": "218",
+      "attribute_name": "patch (pocket)",
+      "task_id": "pocket"
+    },
+    {
+      "attribute_id": "219",
+      "attribute_name": "welt (pocket)",
+      "task_id": "pocket"
+    },
+    {
+      "attribute_id": "222",
+      "attribute_name": "slash (pocket)",
+      "task_id": "pocket"
+    },
+    {
+      "attribute_id": "223",
+      "attribute_name": "curved (pocket)",
+      "task_id": "pocket"
+    },
+    {
+      "attribute_id": "224",
+      "attribute_name": "flap (pocket)",
+      "task_id": "pocket"
+    }
+  ],
+  "note": "Legacy neckline/pocket attributes are loaded from C2 mapping at runtime. Retained C2 neckline/pocket mappings repaired with official attribute IDs."
+}

@@ -1,0 +1,16 @@
+{
+  "models": [
+    {
+      "name": "fashion313_attribute_model_v1.pth",
+      "role": "attribute_model",
+      "sha256": "2842eeea66c79cf03ae3b5958859dc150669d8e76914edf6089b64a011853920"
+    },
+    {
+      "name": "fashion313_region_family_model_v1.pth",
+      "role": "region_family_model",
+      "sha256": "06c3711e88721eaa135f1ece750c2911fb55a76b8e2b90b4d489bcefdec12bfb"
+    }
+  ],
+  "public_download_url_available": false,
+  "release_asset_tag": "v0.1.0-rc1"
+}

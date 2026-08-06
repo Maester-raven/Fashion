@@ -1,0 +1,54 @@
+{
+  "formal_tasks": {
+    "collar__collar_design": {
+      "family": "collar",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "garment_instance__closure_opening_design": {
+      "family": "garment_instance",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "garment_instance__garment_length": {
+      "family": "garment_instance",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "garment_instance__waistline_design": {
+      "family": "garment_instance",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "neckline": {
+      "family": "neckline",
+      "head": "retained_c2_forward_c2",
+      "internal_group": "neckline__part_design_neckline",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "pocket": {
+      "family": "pocket",
+      "head": "retained_c2_forward_c2",
+      "internal_group": "pocket__style_named_garment",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "sleeve__sleeve_design": {
+      "family": "sleeve",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    },
+    "sleeve__sleeve_length": {
+      "family": "sleeve",
+      "head": "new_full_scope_forward_new",
+      "score_conversion": "softmax",
+      "single_label": true
+    }
+  }
+}

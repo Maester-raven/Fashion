@@ -1,0 +1,22 @@
+name: Fashion 3.1.3 Runtime Tests
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  cpu-runtime-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install pytest
+      - name: Run no-checkpoint tests
+        run: pytest tests/3_1_3

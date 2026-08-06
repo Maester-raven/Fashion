@@ -1,0 +1,35 @@
+{
+  "accuracy_dataset_identity": "development parent-disjoint OOF",
+  "accuracy_hit_count": 7118,
+  "accuracy_target_count": 7636,
+  "accuracy_top3_macro": 0.8965765634,
+  "accuracy_top3_micro": 0.9321634363541121,
+  "attribute_checkpoint_sha256": "2842eeea66c79cf03ae3b5958859dc150669d8e76914edf6089b64a011853920",
+  "attribute_registry_sha256": "3ae215d04919198ea4e6aab3dd938c6e450cee219955fdcf302c6f3ecb81469e",
+  "benchmark_hardware": "NVIDIA GeForce RTX 4080 SUPER",
+  "benchmark_protocol": "warm in-memory batch=1 GC-controlled",
+  "config_sha256": "92805d4bfa8a65a9c035b5368c90ae85010d3abf67e4899b4e58ba1111510d1a",
+  "formal_attribute_count": 69,
+  "formal_task_count": 8,
+  "gc_controlled_average_ms": 19.8856,
+  "gc_enabled_average_ms": 20.1751,
+  "known_limitations": [
+    "Native Design only",
+    "hardware-dependent latency",
+    "model URL unavailable"
+  ],
+  "model_asset_delivery_status": "manual placement required",
+  "package_version": "0.1.0rc1",
+  "public_entrypoint": "fashion313_runtime.Fashion313Runtime",
+  "region_family_checkpoint_sha256": "06c3711e88721eaa135f1ece750c2911fb55a76b8e2b90b4d489bcefdec12bfb",
+  "release_candidate_name": "fashion313_g1_github_release_candidate_v1",
+  "runtime_backend": "g1_gpu_preprocessing+pytorch",
+  "source_runtime_sha256": "1db37d42556cebf38e44808754fa7d9e6020e62e26c3772d23535504daca3f29",
+  "task_registry_sha256": "816f0c5171c048859098d20caf021b4456c1326e0a487d92e0f292caf9eb2d8c",
+  "third_party_dependencies": [
+    "DINOv2",
+    "PyTorch",
+    "NumPy",
+    "Pillow"
+  ]
+}

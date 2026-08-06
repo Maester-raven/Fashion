@@ -1,0 +1,22 @@
+{
+  "family_to_tasks": {
+    "collar": [
+      "collar__collar_design"
+    ],
+    "garment_instance": [
+      "garment_instance__closure_opening_design",
+      "garment_instance__garment_length",
+      "garment_instance__waistline_design"
+    ],
+    "neckline": [
+      "neckline"
+    ],
+    "pocket": [
+      "pocket"
+    ],
+    "sleeve": [
+      "sleeve__sleeve_design",
+      "sleeve__sleeve_length"
+    ]
+  }
+}
