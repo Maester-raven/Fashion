@@ -548,3 +548,12 @@ Presence Gate -> Smoke R1 Top-1 -> SAM-HQ bbox prompt -> coarse bbox runtime fal
 - mask_quality_limited = true
 
 路径通过 `--model-root`、`--project-root`、`FASHION_MODEL_ROOT`、`FASHION_PROJECT_ROOT` 和 `SAM_HQ_REPO_ROOT` 配置；仓库不包含 checkpoint、数据集、Sealed predictions 或 Future Test 资产。
+
+
+## 3.1.2 zero/one/N functional release
+
+The default 3.1.2 profile is `zero_one_n_functional_v1`, providing Level-1 `generic_all` and `no_target` 0/1/N bbox+mask output. The formal runtime is `3_1_2_zero_one_n_functional_release_v1`. `constrained_subset` is not complete; PRD accuracy, 30 ms latency, and production quality are not passed. The legacy behavior remains available as `single_hit_v1`.
+
+Deployment: [guide](docs/3_1_2/DEPLOYMENT.md) · [API](docs/3_1_2/API.md) · [schema](docs/3_1_2/OUTPUT_SCHEMA.md) · [limitations](docs/3_1_2/LIMITATIONS.md) · [model assets](docs/3_1_2/MODEL_ASSETS.md) · [troubleshooting](docs/3_1_2/TROUBLESHOOTING.md).
+
+Install the pinned environment, download the five checksum-verified Release asset packages, run all three verifiers, then use `python -m fashion_3_1_2.cli` or `Fashion312Runtime`. Inputs accept either a complete image plus parent XYXY bbox or a direct parent crop. Run `bash scripts/demo/run_3_1_2_demo.sh ...` for the demo. Public demo images are not bundled because development-image redistribution permission was not established. Common failures are missing assets, LFS pointers, CUDA mismatch, insufficient GPU memory, and unsupported constrained queries. Third-party notices are under `third_party/3_1_2`.

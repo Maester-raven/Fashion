@@ -5,6 +5,7 @@ from fashion_3_1_2.pipeline import save_json, save_overlay
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--profile', default='single_hit_v1', choices=['single_hit_v1','zero_one_n_functional_v1'])
     ap.add_argument("--image", required=True)
     ap.add_argument("--query", required=True)
     ap.add_argument("--config", required=True)

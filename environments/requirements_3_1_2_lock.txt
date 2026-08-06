@@ -1,0 +1,20 @@
+# Install after the conda dependencies in environment_3_1_2_release.yml.
+# Wheels are selected for Python 3.10, CUDA 12.1 and the validated Torch 2.1 ABI.
+https://download.pytorch.org/whl/cu121/torch-2.1.2%2Bcu121-cp310-cp310-linux_x86_64.whl
+https://download.pytorch.org/whl/cu121/torchvision-0.16.2%2Bcu121-cp310-cp310-linux_x86_64.whl
+https://download.openmmlab.com/mmcv/dist/cu121/torch2.1.0/mmcv-2.1.0-cp310-cp310-manylinux1_x86_64.whl
+mmengine==0.10.7
+mmdet==3.3.0
+tensorrt-cu12==10.13.3.9
+onnx==1.16.2
+transformers==4.32.0
+tokenizers==0.13.3
+safetensors==0.7.0
+opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+pycocotools==2.0.11
+timm==1.0.27
+scipy==1.15.3
+terminaltables==3.1.10
+shapely==2.1.2
+requests==2.32.5

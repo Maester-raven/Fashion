@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-07-15T04:31:54.285041+00:00",
+  "detector_v2": {
+    "adapter_status": "unimplemented",
+    "bbox_conversion": "parent_crop_xyxy_plus_parent_offset_to_full_image_xyxy",
+    "checkpoint": "route_a/detector_v2.pth",
+    "input_parent_crop": "parent_bbox_full_image_xyxy",
+    "score_threshold": 0.0,
+    "source_cap": 1000
+  },
+  "detector_v3": {
+    "adapter_status": "unimplemented",
+    "bbox_conversion": "parent_crop_xyxy_plus_parent_offset_to_full_image_xyxy",
+    "checkpoint": "route_a/detector_v3.pth",
+    "input_parent_crop": "parent_bbox_full_image_xyxy",
+    "score_threshold": 0.0,
+    "source_cap": 1000
+  },
+  "determinism": {
+    "deterministic_parent_order": true,
+    "fixed_seed": 3122,
+    "gt_or_query_leakage_forbidden": true,
+    "physical_line_order_join_forbidden": true
+  },
+  "excluded_sources": [
+    "samhq"
+  ],
+  "forbidden_generation_inputs": [
+    "query_text",
+    "part_name",
+    "target_concept",
+    "GT bbox",
+    "GT mask",
+    "GT target count"
+  ],
+  "fusion": {
+    "containment_handling": "not separate; near-duplicate NMS only",
+    "cross_source_nms_iou": 0.985,
+    "duplicate_handling": "skip candidate if IoU>=0.985 with already kept candidate",
+    "final_cap1000": 500,
+    "final_rank": "descending fused score, then smaller area, then source name",
+    "per_source_keep": {
+      "detector_v2": 1200,
+      "detector_v3": 1500
+    },
+    "score_direction": "higher_is_better",
+    "score_normalization": "adapter candidate_score_normalized; source priors applied in fusion",
+    "small_box_boost": {
+      "rel_area_lt_0.002": 0.03,
+      "rel_area_lt_0.01": 0.015
+    },
+    "source_prior": {
+      "detector_v2": 1.0,
+      "detector_v3": 1.03
+    }
+  },
+  "policy_version": "route_a_live_dual_detector_policy_v1",
+  "runtime": {
+    "cached_or_grid_fallback": "forbidden",
+    "per_parent_status_required": true,
+    "per_source_timeout_sec": 600,
+    "resume": true,
+    "source_failure_policy": "fail_parent_do_not_silently_drop_source",
+    "supports_arbitrary_parent_manifest_interface": true
+  },
+  "runtime_hashes": {
+    "detector_v2_adapter_sha256": "0436f86a7b08362cc481d06b5407f87b577c3207939e2bd18a57955898e51058",
+    "detector_v2_checkpoint_sha256": "560b4c160c6455e92095b6b071d2a73771a249f95b2fe8a1c6c40006a528a5ba",
+    "detector_v3_adapter_sha256": "7c3b9aed26d88aff5aeddd717bd96cfcabbcf95c2ed9d27c4cf8c747f01028a1",
+    "detector_v3_checkpoint_sha256": "23e5c0f63be1f2fc3464d7d27f8d7add944862a8e5e92fd8bf2fc8aa166095b0",
+    "fusion_adapter_sha256": "d82ee41e3b1f2ab52b8ab407d46990401d492ce5875870fa91567f6a62821416"
+  },
+  "sources": [
+    "detector_v2",
+    "detector_v3"
+  ],
+  "status": "frozen_live_dual_detector_policy"
+}

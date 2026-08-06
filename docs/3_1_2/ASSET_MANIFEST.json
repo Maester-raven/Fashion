@@ -2,12 +2,12 @@
   "do_not_commit": [
     "checkpoints",
     "datasets",
-    "work_dirs",
+    "runtime_cache",
     "sealed_predictions",
     "review_images_full"
   ],
   "positive_selector": {
-    "checkpoint": "work_dirs/train_3_1_2_route_a_only_ranker_with_fp_control_and_teacher_distillation_smoke_v1/train_route_a_only_ranker_r1/best_model.pth",
+    "checkpoint": "checkpoints/3_1_2/smoke_r1/best_model.pth",
     "checkpoint_sha256": "3a2897974bfddb69bd2adf11419f48289222ae9f1ea080ad8e12eb257d220350",
     "final_topk": 1,
     "name": "Frozen Smoke R1 Positive Ranker",
@@ -16,7 +16,7 @@
     "threshold": 0.65
   },
   "presence_gate": {
-    "checkpoint": "work_dirs/train_presence_gate_v1/train_presence_gate_g2/best_model.pth",
+    "checkpoint": "checkpoints/3_1_2/presence_g2/best_model.pth",
     "checkpoint_sha256": "45d18f9c2a52c5aa922fb597cce0630d88f0d5e839075cfc527d4d92a07b9389",
     "name": "Frozen Presence Gate G2",
     "policy_sha256": "64640fca8fb5676f8d7bae0e950d4300ee36e3f3ae9d04075b95cdacc9e346b6",
@@ -27,6 +27,6 @@
     "checkpoint": "checkpoints/sam_hq/sam_hq_vit_l.pth",
     "checkpoint_sha256": "e1a6c385d62bf005ded91a54d5ec55c985cfc4103ef89c08d90f39f04934c343",
     "model_type": "vit_l",
-    "repo": "repos/sam-hq-official"
+    "repo": "third_party/3_1_2/sam_hq"
   }
 }

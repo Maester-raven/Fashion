@@ -1,0 +1,55 @@
+{
+  "tag": "3.1.2-zero-one-n-functional-v1",
+  "packages": [
+    {
+      "name": "fashion312-presence-g2-v1",
+      "filename": "fashion312-presence-g2-v1.tar",
+      "size_bytes": 2785280,
+      "sha256": "8c227c207618528ae9a08a8fc8b30dc71ca66a9a3130ef398f2251348c56c5c8",
+      "component": "presence",
+      "required": true,
+      "license_status": "documented_review_required",
+      "target_install_path": "checkpoints/3_1_2"
+    },
+    {
+      "name": "fashion312-route-a-v2-v3-v1",
+      "filename": "fashion312-route-a-v2-v3-v1.tar",
+      "size_bytes": 152094720,
+      "sha256": "127495d63243eaf7c91278a852fecf4fe4f41ce816422ac067df4f1e3b8db8fb",
+      "component": "route",
+      "required": true,
+      "license_status": "documented_review_required",
+      "target_install_path": "checkpoints/3_1_2"
+    },
+    {
+      "name": "fashion312-fashionclip-v1",
+      "filename": "fashion312-fashionclip-v1.tar",
+      "size_bytes": 608808960,
+      "sha256": "b14cdc122f4a18b5e5c92dd4f4f51c7ce57cb66bbe48166947bbbbd7652e965a",
+      "component": "fashionclip",
+      "required": true,
+      "license_status": "documented_review_required",
+      "target_install_path": "checkpoints/3_1_2"
+    },
+    {
+      "name": "fashion312-smoke-r1-v1",
+      "filename": "fashion312-smoke-r1-v1.tar",
+      "size_bytes": 4679680,
+      "sha256": "1af2830cc958a16d73a4e3b0c73df97e29c0ae218931f5f65a10d98ca2855610",
+      "component": "smoke",
+      "required": true,
+      "license_status": "documented_review_required",
+      "target_install_path": "checkpoints/3_1_2"
+    },
+    {
+      "name": "fashion312-samhq-v1",
+      "filename": "fashion312-samhq-v1.tar",
+      "size_bytes": 1254881280,
+      "sha256": "93c3802d64aef8bc19d2c6d954d0c40170419ec95d4891960ec24bd1fb8e531d",
+      "component": "samhq",
+      "required": true,
+      "license_status": "documented_review_required",
+      "target_install_path": "checkpoints/3_1_2"
+    }
+  ]
+}

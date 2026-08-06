@@ -1,0 +1,1 @@
+from fashion_3_1_2.runtime import Fashion312ZeroOneNFunctionalRuntime
