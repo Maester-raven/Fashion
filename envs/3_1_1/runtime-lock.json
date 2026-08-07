@@ -1,0 +1,23 @@
+{
+  "cuda_variant": "cu121",
+  "install_source": "pip wheels plus OpenMMLab compiled mmcv wheel",
+  "python_version": "3.10.20",
+  "required_packages": {
+    "Pillow": "12.2.0",
+    "mmcv": "2.1.0",
+    "mmdet": "3.3.0",
+    "mmengine": "0.10.7",
+    "numpy": "1.26.4",
+    "onnx": "1.16.2",
+    "opencv-python": "4.11.0.86"
+  },
+  "torch_version": "2.1.2+cu121",
+  "torchvision_version": "0.16.2+cu121",
+  "verification_commands": [
+    "python envs/3_1_1/verify_environment.py"
+  ],
+  "wheel_index": [
+    "https://download.pytorch.org/whl/cu121",
+    "https://download.openmmlab.com/mmcv/dist/cu121/torch2.1/index.html"
+  ]
+}

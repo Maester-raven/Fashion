@@ -562,3 +562,25 @@ The default 3.1.2 profile is `zero_one_n_functional_v1`, providing Level-1 `gene
 Deployment: [guide](docs/3_1_2/DEPLOYMENT.md) · [API](docs/3_1_2/API.md) · [schema](docs/3_1_2/OUTPUT_SCHEMA.md) · [limitations](docs/3_1_2/LIMITATIONS.md) · [model assets](docs/3_1_2/MODEL_ASSETS.md) · [troubleshooting](docs/3_1_2/TROUBLESHOOTING.md).
 
 Install the pinned environment, download the five checksum-verified Release asset packages, run all three verifiers, then use `python -m fashion_3_1_2.cli` or `Fashion312Runtime`. Inputs accept either a complete image plus parent XYXY bbox or a direct parent crop. Run `bash scripts/demo/run_3_1_2_demo.sh ...` for the demo. Public demo images are not bundled because development-image redistribution permission was not established. Common failures are missing assets, LFS pointers, CUDA mismatch, insufficient GPU memory, and unsupported constrained queries. Third-party notices are under `third_party/3_1_2`.
+
+## Fashion 3.1 Module-level runtime environments
+
+Fashion 3.1 is deployed as three module-level environments rather than one universal conda environment:
+
+- `3.1.1` uses OpenMMLab/MMCV compiled ops for garment instance segmentation.
+- `3.1.2` uses the local-part grounding runtime and its multimodal dependencies.
+- `3.1.3` uses the frozen PyTorch CUDA runtime for native design attribute prediction.
+
+Recommended install pattern:
+
+```bash
+git clone https://github.com/Maester-raven/Fashion.git
+cd Fashion
+python scripts/setup_module_environment.py --module 3.1.1 --backend conda --env-root $HOME/fashion_envs --cache-root $HOME/fashion_cache --tmp-root $HOME/fashion_tmp
+python scripts/setup_module_environment.py --module 3.1.2 --backend conda --env-root $HOME/fashion_envs --cache-root $HOME/fashion_cache --tmp-root $HOME/fashion_tmp
+python scripts/setup_module_environment.py --module 3.1.3 --backend conda --env-root $HOME/fashion_envs --cache-root $HOME/fashion_cache --tmp-root $HOME/fashion_tmp
+```
+
+On cloud hosts with a small root filesystem, put `--env-root`, `--cache-root`, and `--tmp-root` on the large data disk. See `docs/deployment/autodl.md`.
+
+After installing a module environment, use `scripts/download_models.py` for model assets, then run the module CLI or `scripts/run_full_3_1_pipeline.py` as documented.

@@ -1,7 +1,9 @@
-numpy==1.26.4
-opencv-python==4.8.1.78
-pycocotools==2.0.11
+-f https://download.openmmlab.com/mmcv/dist/cu121/torch2.1/index.html
+mmcv==2.1.0
 mmengine==0.10.7
 mmdet==3.3.0
+opencv-python==4.11.0.86
+pycocotools==2.0.11
 onnx==1.16.2
-# Install mmcv wheel matching CUDA/PyTorch, e.g. OpenMMLab cu121 torch2.1.0 wheel.
+numpy==1.26.4
+Pillow==12.2.0
